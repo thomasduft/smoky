@@ -18,9 +18,16 @@ internal class Runner
   {
     var results = new List<TestResult>();
 
-    // 
+    // HealthChecks
+    foreach (var healthTest in _configuration.Tests.HealthTests)
+    {
+      var executor = new HealthCheckExecutor(healthTest);
+      var result = executor.Execute(_configuration.Domain);
+      results.Add(result);
+    }
 
-    //
+    // E2ETests
+    // TODO
 
     var success = !results.Any(r => r.Status == TestStatus.Failed);
     if (!success)
@@ -28,7 +35,7 @@ internal class Runner
       // Echo all failed results
       foreach (var result in results.Where(r => r.Status == TestStatus.Failed))
       {
-        ConsoleHelper.WriteLineError($"Name: '{result.Name}', Actual value: '{result.Actual}'");
+        ConsoleHelper.WriteLineError($"Name: '{result.Name}', Cause: '{result.FailCause}'");
       }
     }
 

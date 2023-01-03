@@ -1,6 +1,6 @@
 namespace tomware.Smoky;
 
-public class SmokyConfiguration
+internal class SmokyConfiguration
 {
   /// <summary>
   /// Domain against the smoke tests need to run.

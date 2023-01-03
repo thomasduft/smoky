@@ -1,5 +1,5 @@
 {
-  "Domain": "https://localhost:5001/",
+  "Domain": "https://localhost:5001",
   "Headless": false,
   "Slow": true,
   "Tests": {
@@ -12,7 +12,7 @@
       {
         "Name": "All users seeded",
         "Expected": "Healthy",
-        "PropertyPath": "info?key=UsersSeededHealthCheck&property=status"
+        "PropertyPath": "info[0].status"
       }
     ],
     "E2ETests": [

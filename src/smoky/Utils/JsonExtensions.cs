@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace tomware.Smoky;
 
-public static class JsonExtensions
+internal static class JsonExtensions
 {
   private static readonly JsonSerializerOptions _jsonOptions = new()
   {

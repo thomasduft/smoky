@@ -1,6 +1,6 @@
 namespace tomware.Smoky;
 
-public class HealthTest
+internal class HealthTest
 {
   public string Name { get; set; }
   public string Expected { get; set; }

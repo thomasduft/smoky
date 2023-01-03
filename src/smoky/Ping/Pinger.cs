@@ -12,6 +12,7 @@ internal class Pinger
     _domain = domain;
     _client = new HttpClient(new HttpClientHandler
     {
+      ServerCertificateCustomValidationCallback = (s, ce, ca, p) => true,
       AllowAutoRedirect = false
     });
   }

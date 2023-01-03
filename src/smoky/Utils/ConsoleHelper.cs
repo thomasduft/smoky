@@ -2,7 +2,7 @@ using System;
 
 namespace tomware.Smoky;
 
-public static class ConsoleHelper
+internal static class ConsoleHelper
 {
   public static void Exit(string reason)
   {

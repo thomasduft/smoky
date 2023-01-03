@@ -29,7 +29,7 @@
       "program": "${workspaceFolder}/src/smoky/bin/Debug/net7.0/tomware.Smoky.dll",
       "args": [
         "ping",
-        "https://localhost:5001/"
+        "https://localhost:5001"
       ],
       "cwd": "${workspaceFolder}/src/smoky",
       "stopAtEntry": false
