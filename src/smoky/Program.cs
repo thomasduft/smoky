@@ -67,8 +67,6 @@ class Program
     });
 
     app.Execute(args);
-
-    WriteLineSuccess("done...");
   }
 
   static SmokyConfiguration GetConfiguration(string file)
@@ -81,7 +79,7 @@ class Program
     }
     catch (Exception ex)
     {
-      var reason = $"Error in reading config.json file! Exception: '{ex.Message}'";
+      var reason = $"Error in reading config file! Exception: '{ex.Message}'";
       Exit(reason);
     }
 

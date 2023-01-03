@@ -1,5 +1,8 @@
 using System;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
 using Newtonsoft.Json.Linq;
 
 namespace tomware.Smoky;
@@ -20,26 +23,24 @@ internal class HealthCheckExecutor : ITestExcecutor
     });
   }
 
-  public TestResult Execute(string domain)
+  public async Task<TestResult> ExecuteAsync(string domain, CancellationToken cancellationToken)
   {
     // TODO: provide health endpoint as configuration
     var url = $"{domain}/health";
 
     try
     {
-      var response = _client.GetAsync(url).GetAwaiter().GetResult();
+      var response = await _client.GetAsync(url);
       if (!response.IsSuccessStatusCode)
       {
         return TestResult.FailedWithOtherReason(_config.Name, response.ReasonPhrase);
       }
 
-      var json = response.Content.ReadAsStringAsync()
-        .GetAwaiter()
-        .GetResult();
+      var json = await response.Content.ReadAsStringAsync();
 
       JObject o = JObject.Parse(json);
       var value = (string)o.SelectToken(_config.PropertyPath);
-      
+
       // assert
       if (value == _config.Expected)
       {

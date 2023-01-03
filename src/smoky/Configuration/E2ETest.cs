@@ -14,6 +14,7 @@ internal class E2EAssertion
 {
   public string Name { get; set; } = string.Empty;
   public string Selector { get; set; } = string.Empty;
+  public string Expected { get; set; } = string.Empty;
 }
 
 internal class E2ECommand

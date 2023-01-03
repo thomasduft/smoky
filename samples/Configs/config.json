@@ -1,6 +1,6 @@
 {
   "Domain": "https://localhost:5001",
-  "Headless": false,
+  "Headless": true,
   "Slow": true,
   "Tests": {
     "HealthTests": [
@@ -21,12 +21,14 @@
         "Route": "Login",
         "Assertions": [
           {
-            "Name": "should display Username label",
-            "Selector": ""
+            "Name": "Should display Username label",
+            "Selector": "label[for=Input_Username]",
+            "Expected": "Username2"
           },
           {
-            "Name": "should display Password label",
-            "Selector": ""
+            "Name": "Should display Password label",
+            "Selector": "label[for=Input_Password]",
+            "Expected": "Password"
           }
         ]
       },
@@ -35,17 +37,17 @@
         "Route": "Login",
         "Commands": [
           {
-            "Name": "should enter username",
+            "Name": "Should enter username",
             "Input": "admin",
             "Selector": ""
           },
           {
-            "Name": "should enter password",
+            "Name": "Should enter password",
             "Input": "password",
             "Selector": ""
           },
           {
-            "Name": "should click login",
+            "Name": "Should click login",
             "Selector": ""
           }
         ]

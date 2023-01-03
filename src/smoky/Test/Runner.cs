@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace tomware.Smoky;
 
@@ -18,27 +19,45 @@ internal class Runner
   {
     var results = new List<TestResult>();
 
-    // HealthChecks
-    foreach (var healthTest in _configuration.Tests.HealthTests)
-    {
-      var executor = new HealthCheckExecutor(healthTest);
-      var result = executor.Execute(_configuration.Domain);
-      results.Add(result);
-    }
+    RunHealthCheckTests(results);
 
-    // E2ETests
-    // TODO
+    RunE2ETests(results);
 
+    // Write failed tests to console
     var success = !results.Any(r => r.Status == TestStatus.Failed);
     if (!success)
     {
-      // Echo all failed results
+      ConsoleHelper.WriteLineError($"The following test(s) failed:");
       foreach (var result in results.Where(r => r.Status == TestStatus.Failed))
       {
-        ConsoleHelper.WriteLineError($"Name: '{result.Name}', Cause: '{result.FailCause}'");
+        ConsoleHelper.WriteLineError($"- Name: {result.Name}, Actual/Error: {result.FailCause}");
       }
     }
 
     return success;
+  }
+
+  private void RunHealthCheckTests(List<TestResult> results)
+  {
+    foreach (var healthTest in _configuration.Tests.HealthTests)
+    {
+      var executor = new HealthCheckExecutor(healthTest);
+      var result = executor.ExecuteAsync(_configuration.Domain, CancellationToken.None)
+        .GetAwaiter()
+        .GetResult();
+      results.Add(result);
+    }
+  }
+
+  private void RunE2ETests(List<TestResult> results)
+  {
+    foreach (var e2eTest in _configuration.Tests.E2ETests)
+    {
+      var executor = new PlaywrightExecutor(e2eTest, _configuration.Headless, _configuration.Slow);
+      var result = executor.ExecuteAsync(_configuration.Domain, CancellationToken.None)
+        .GetAwaiter()
+        .GetResult();
+      results.Add(result);
+    }
   }
 }
