@@ -37,7 +37,7 @@ class Program
       command.HelpOption(HelpOption);
       command.OnExecute(() =>
       {
-       // if it fails return 1 otherwise 0
+        // if it fails return 1 otherwise 0
 
         return 0;
       });
