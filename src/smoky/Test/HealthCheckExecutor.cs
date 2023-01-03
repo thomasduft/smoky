@@ -22,6 +22,7 @@ internal class HealthCheckExecutor : ITestExcecutor
 
   public TestResult Execute(string domain)
   {
+    // TODO: provide health endpoint as configuration
     var url = $"{domain}/health";
 
     try
