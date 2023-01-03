@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "smoky:ping",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-smoky",
+      "program": "${workspaceFolder}/src/smoky/bin/Debug/net7.0/tomware.Smoky.dll",
+      "args": [
+        "ping",
+        "https://demo.playone.buhlergroup.com/"
+      ],
+      "cwd": "${workspaceFolder}/src/smoky",
+      "stopAtEntry": false
+    }
+  ]
+}
