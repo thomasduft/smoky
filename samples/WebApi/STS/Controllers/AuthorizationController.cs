@@ -1,13 +1,17 @@
 using System.Security.Claims;
+
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
+
 using WebApi.Extensions;
+
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace WebApi;

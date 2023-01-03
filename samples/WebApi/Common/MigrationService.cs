@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 using OpenIddict.Abstractions;
+
 using WebApi.Domain;
+
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace WebApi;

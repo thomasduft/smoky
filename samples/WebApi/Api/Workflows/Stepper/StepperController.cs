@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using OpenIddict.Validation.AspNetCore;
+
 using WebApi.Common;
 
 namespace WebApi.Workflows.Stepper

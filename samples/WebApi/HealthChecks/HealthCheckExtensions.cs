@@ -1,7 +1,8 @@
 using System.Net.Mime;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace WebApi;
 
