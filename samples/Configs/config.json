@@ -1,5 +1,55 @@
 {
-  "Domain": "https://demo.playone.buhlergroup.com/",
+  "Domain": "https://localhost:5001/",
+  "Headless": false,
+  "Slow": true,
   "Tests": {
+    "HealthTests": [
+      {
+        "Name": "System is healthy",
+        "Expected": "Healthy",
+        "PropertyPath": "status"
+      },
+      {
+        "Name": "All users seeded",
+        "Expected": "Healthy",
+        "PropertyPath": "info?key=UsersSeededHealthCheck&property=status"
+      }
+    ],
+    "E2ETests": [
+      {
+        "Name": "Should display login page",
+        "Route": "Login",
+        "Assertions": [
+          {
+            "Name": "should display Username label",
+            "Selector": ""
+          },
+          {
+            "Name": "should display Password label",
+            "Selector": ""
+          }
+        ]
+      },
+      {
+        "Name": "Should login",
+        "Route": "Login",
+        "Commands": [
+          {
+            "Name": "should enter username",
+            "Input": "admin",
+            "Selector": ""
+          },
+          {
+            "Name": "should enter password",
+            "Input": "password",
+            "Selector": ""
+          },
+          {
+            "Name": "should click login",
+            "Selector": ""
+          }
+        ]
+      }
+    ]
   }
 }

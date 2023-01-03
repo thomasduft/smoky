@@ -29,7 +29,20 @@
       "program": "${workspaceFolder}/src/smoky/bin/Debug/net7.0/tomware.Smoky.dll",
       "args": [
         "ping",
-        "https://demo.playone.buhlergroup.com/"
+        "https://localhost:5001/"
+      ],
+      "cwd": "${workspaceFolder}/src/smoky",
+      "stopAtEntry": false
+    },
+    {
+      "name": "smoky:test",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-smoky",
+      "program": "${workspaceFolder}/src/smoky/bin/Debug/net7.0/tomware.Smoky.dll",
+      "args": [
+        "test",
+        "../../samples/Configs/config.json"
       ],
       "cwd": "${workspaceFolder}/src/smoky",
       "stopAtEntry": false

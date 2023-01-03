@@ -1,7 +1,4 @@
 using System.Net.Http;
-using System.Net.NetworkInformation;
-
-using static tomware.Smoky.ConsoleHelper;
 
 namespace tomware.Smoky;
 
