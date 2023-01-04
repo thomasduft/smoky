@@ -9,10 +9,6 @@ namespace tomware.Smoky;
 // - https://www.youtube.com/watch?v=DbtP9kSbw5s
 internal class PlaywrightExecutor
 {
-  private const string StorageStatePath = "state.json";
-
-  private bool _signedIn = false;
-
   private readonly bool _headless;
   private readonly bool _slow;
 
@@ -36,11 +32,39 @@ internal class PlaywrightExecutor
       Headless = _headless,
       SlowMo = _slow ? 100 : null // by N milliseconds per operation,
     });
-    var context = await GetBrowserContext(browser);
 
     foreach (var test in tests)
     {
-      var result = await TestAsync(context, domain, test, cancellationToken);
+      var result = await TestAsync(browser, domain, test, cancellationToken);
+
+      // // store the state if signed in if then required since I use always the same page object!
+      // if (test.Act is not null && test.Act.IsLogin)
+      // {
+      //   // Automate loggin in
+      //   // see: https://playwright.dev/dotnet/docs/auth#automate-logging-in
+      //   var path = await context.StorageStateAsync(new BrowserContextStorageStateOptions
+      //   {
+      //     Path = GetStoragePath(),
+      //   });
+
+      //   // Get session storage and store as env variable
+      //   var sessionStorage = await page.EvaluateAsync<string>("() => JSON.stringify(sessionStorage)");
+      //   Environment.SetEnvironmentVariable("SESSION_STORAGE", sessionStorage);
+
+      //   // Set session storage in a new context
+      //   var loadedSessionStorage = Environment.GetEnvironmentVariable("SESSION_STORAGE");
+      //   await context.AddInitScriptAsync(@"(storage => {
+      //       if (window.location.hostname === 'example.com') {
+      //         const entries = JSON.parse(storage);
+      //         for (const [key, value] of Object.entries(entries)) {
+      //           window.sessionStorage.setItem(key, value);
+      //         }
+      //       }
+      //     })('" + loadedSessionStorage + "')");
+
+      //   _signedIn = true;
+      // }
+
       results.Add(result);
     }
 
@@ -48,7 +72,7 @@ internal class PlaywrightExecutor
   }
 
   private async Task<TestResult> TestAsync(
-    IBrowserContext context,
+    IBrowser browser,
     string domain,
     E2ETest config,
     CancellationToken cancellationToken
@@ -56,9 +80,15 @@ internal class PlaywrightExecutor
   {
     try
     {
+      var context = await GetBrowserContext(browser);
       var page = await context.NewPageAsync();
+
       var url = $"{domain}/{config.Route}";
-      await page.GotoAsync(url);
+      await page.GotoAsync(url, new() { WaitUntil = WaitUntilState.DOMContentLoaded });
+      if (!page.Url.StartsWith(url))
+      {
+        await page.GotoAsync(url);
+      }
 
       // Arrange
       if (config.Arrange is not null && config.Arrange.Any())
@@ -76,16 +106,6 @@ internal class PlaywrightExecutor
       if (config.Act is not null)
       {
         await page.Locator(config.Act.Selector).ClickAsync();
-
-        if (config.Act.IsLogin)
-        {
-          var path = await context.StorageStateAsync(new BrowserContextStorageStateOptions
-          {
-            Path = StorageStatePath,
-          });
-
-          _signedIn = true;
-        }
       }
 
       // Assert
@@ -93,6 +113,7 @@ internal class PlaywrightExecutor
       {
         foreach (var assert in config.Assert)
         {
+          // await page.Locator(assert.Selector).WaitForAsync();
           var value = await page.Locator(assert.Selector).InnerHTMLAsync();
           if (value != assert.Expected)
           {
@@ -113,29 +134,42 @@ internal class PlaywrightExecutor
   {
     IBrowserContext? context = null;
 
-    if (_signedIn)
+    context = await browser.NewContextAsync(new BrowserNewContextOptions
     {
-      try
-      {
-        context = await browser.NewContextAsync(new BrowserNewContextOptions
-        {
-          IgnoreHTTPSErrors = true,
-          StorageState = StorageStatePath
-        });
-      }
-      catch (Exception ex)
-      {
-        ConsoleHelper.WriteLineError($"{ex.Message}");
-      }
-    }
-    else
-    {
-      context = await browser.NewContextAsync(new BrowserNewContextOptions
-      {
-        IgnoreHTTPSErrors = true,
-      });
-    }
+      IgnoreHTTPSErrors = true
+    });
+
+    // if (_signedIn)
+    // {
+    //   try
+    //   {
+    //     context = await browser.NewContextAsync(new BrowserNewContextOptions
+    //     {
+    //       IgnoreHTTPSErrors = true,
+    //       StorageState = GetStoragePath()
+    //     });
+    //   }
+    //   catch (Exception ex)
+    //   {
+    //     ConsoleHelper.WriteLineError($"{ex.Message}");
+    //   }
+    // }
+    // else
+    // {
+    //   context = await browser.NewContextAsync(new BrowserNewContextOptions
+    //   {
+    //     IgnoreHTTPSErrors = true,
+    //   });
+    // }
+
+    context.SetDefaultTimeout(5000);
 
     return context;
+  }
+
+  private static string GetStoragePath()
+  {
+    var path = Path.Combine(Environment.CurrentDirectory, "state.json");
+    return path;
   }
 }

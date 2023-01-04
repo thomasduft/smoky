@@ -50,9 +50,9 @@
         "Route": "holiday",
         "Assert": [
           {
-            "Name": "Should display title HOLIDAYS",
+            "Name": "Should display title Holidays",
             "Selector": "h3",
-            "Expected": "HOLIDAYS"
+            "Expected": "Holidays"
           }
         ]
       }
