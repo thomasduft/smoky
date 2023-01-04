@@ -2,11 +2,11 @@ namespace tomware.Smoky;
 
 internal record TestResult
 {
-  private string Actual { get; set; }
+  private string Actual { get; set; } = string.Empty;
 
-  private string Reason { get; set; }
+  private string Reason { get; set; } = string.Empty;
 
-  public string Name { get; private set; }
+  public string Name { get; private set; } = string.Empty;
 
   public TestStatus Status { get; private set; }
 

@@ -1,7 +1,3 @@
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading;
-
 namespace tomware.Smoky;
 
 internal class Runner
@@ -42,22 +38,24 @@ internal class Runner
     foreach (var healthTest in _configuration.Tests.HealthTests)
     {
       var executor = new HealthCheckExecutor(healthTest);
-      var result = executor.ExecuteAsync(_configuration.Domain, CancellationToken.None)
-        .GetAwaiter()
-        .GetResult();
+      var result = executor
+        .ExecuteAsync(
+          _configuration.Domain,
+          CancellationToken.None
+        ).GetAwaiter().GetResult();
       results.Add(result);
     }
   }
 
   private void RunE2ETests(List<TestResult> results)
   {
-    foreach (var e2eTest in _configuration.Tests.E2ETests)
-    {
-      var executor = new PlaywrightExecutor(e2eTest, _configuration.Headless, _configuration.Slow);
-      var result = executor.ExecuteAsync(_configuration.Domain, CancellationToken.None)
-        .GetAwaiter()
-        .GetResult();
-      results.Add(result);
-    }
+    var executor = new PlaywrightExecutor(_configuration.Headless, _configuration.Slow);
+    var result = executor
+      .ExecuteAsync(
+        _configuration.Domain,
+        _configuration.Tests.E2ETests,
+        CancellationToken.None
+      ).GetAwaiter().GetResult();
+    results.AddRange(result);
   }
 }

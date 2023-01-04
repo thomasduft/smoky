@@ -1,69 +1,141 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
 using Microsoft.Playwright;
 
 namespace tomware.Smoky;
 
-internal class PlaywrightExecutor : ITestExcecutor
+// TODO: instruct Playwright
+// see:
+// - api reference: https://playwright.dev/dotnet/docs/api/class-playwright
+// - https://github.com/microsoft/playwright-dotnet
+// - https://www.youtube.com/watch?v=DbtP9kSbw5s
+internal class PlaywrightExecutor
 {
-  private readonly E2ETest _config;
+  private const string StorageStatePath = "state.json";
+
+  private bool _signedIn = false;
+
   private readonly bool _headless;
   private readonly bool _slow;
 
-  public PlaywrightExecutor(E2ETest config, bool headless, bool slow)
+  public PlaywrightExecutor(bool headless, bool slow)
   {
-    _config = config;
     _headless = headless;
     _slow = slow;
   }
 
-  public async Task<TestResult> ExecuteAsync(string domain, CancellationToken cancellationToken)
+  public async Task<IEnumerable<TestResult>> ExecuteAsync(
+    string domain,
+    IEnumerable<E2ETest> tests,
+    CancellationToken cancellationToken
+  )
+  {
+    var results = new List<TestResult>();
+
+    using var playwright = await Playwright.CreateAsync();
+    await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+    {
+      Headless = _headless,
+      SlowMo = _slow ? 100 : null // by N milliseconds per operation,
+    });
+    var context = await GetBrowserContext(browser);
+
+    foreach (var test in tests)
+    {
+      var result = await TestAsync(context, domain, test, cancellationToken);
+      results.Add(result);
+    }
+
+    return results;
+  }
+
+  private async Task<TestResult> TestAsync(
+    IBrowserContext context,
+    string domain,
+    E2ETest config,
+    CancellationToken cancellationToken
+  )
   {
     try
     {
-      // TODO: instruct Playwright
-      // see:
-      // - api reference: https://playwright.dev/dotnet/docs/api/class-playwright
-      // - https://github.com/microsoft/playwright-dotnet
-      // - https://www.youtube.com/watch?v=DbtP9kSbw5s
-
-      using var playwright = await Playwright.CreateAsync();
-      await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-      {
-        Headless = _headless,
-        SlowMo = _slow ? 100 : null // by N milliseconds per operation,
-      });
-
-      var context = await browser.NewContextAsync(new BrowserNewContextOptions
-      {
-        IgnoreHTTPSErrors = true
-      });
-
       var page = await context.NewPageAsync();
-      var url = $"{domain}/{_config.Route}";
-
+      var url = $"{domain}/{config.Route}";
       await page.GotoAsync(url);
 
-      foreach (var assertion in _config.Assertions)
+      // Arrange
+      if (config.Arrange is not null && config.Arrange.Any())
       {
-        var value = await page.Locator(assertion.Selector).InnerHTMLAsync();
-        if (value != assertion.Expected)
+        foreach (var arrange in config.Arrange)
         {
-          return TestResult.Failed(assertion.Name, value);
+          await page.Locator(arrange.Selector).FillAsync(arrange.Input);
+          await Assertions
+            .Expect(page.Locator(arrange.Selector))
+            .ToHaveValueAsync(arrange.Input);
         }
-        
-        // await Assertions
-        //   .Expect(page.Locator(assertion.Selector))
-        //   .ToHaveValueAsync(assertion.Expected);
       }
 
-      return TestResult.Passed(_config.Name);
+      // Act
+      if (config.Act is not null)
+      {
+        await page.Locator(config.Act.Selector).ClickAsync();
+
+        if (config.Act.IsLogin)
+        {
+          var path = await context.StorageStateAsync(new BrowserContextStorageStateOptions
+          {
+            Path = StorageStatePath,
+          });
+
+          _signedIn = true;
+        }
+      }
+
+      // Assert
+      if (config.Assert is not null && config.Assert.Any())
+      {
+        foreach (var assert in config.Assert)
+        {
+          var value = await page.Locator(assert.Selector).InnerHTMLAsync();
+          if (value != assert.Expected)
+          {
+            return TestResult.Failed(assert.Name, value);
+          }
+        }
+      }
+
+      return TestResult.Passed(config.Name);
     }
     catch (Exception ex)
     {
-      return TestResult.FailedWithOtherReason(_config.Name, ex.Message);
+      return TestResult.FailedWithOtherReason(config.Name, ex.Message);
     }
+  }
+
+  private async Task<IBrowserContext> GetBrowserContext(IBrowser browser)
+  {
+    IBrowserContext? context = null;
+
+    if (_signedIn)
+    {
+      try
+      {
+        context = await browser.NewContextAsync(new BrowserNewContextOptions
+        {
+          IgnoreHTTPSErrors = true,
+          StorageState = StorageStatePath
+        });
+      }
+      catch (Exception ex)
+      {
+        ConsoleHelper.WriteLineError($"{ex.Message}");
+      }
+    }
+    else
+    {
+      context = await browser.NewContextAsync(new BrowserNewContextOptions
+      {
+        IgnoreHTTPSErrors = true,
+      });
+    }
+
+    return context;
   }
 }

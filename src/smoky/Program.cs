@@ -27,7 +27,12 @@ class Program
       command.HelpOption(HelpOption);
       command.OnExecute(() =>
       {
-        Pinger pinger = new Pinger(domainArgument.Value);
+        if (!domainArgument.HasValue)
+        {
+          Exit($"Please specify a valid domain argument");
+        }
+
+        Pinger pinger = new Pinger(domainArgument.Value!);
         return pinger.Ping()
           ? 0
           : 1;
@@ -42,17 +47,27 @@ class Program
       command.HelpOption(HelpOption);
       command.OnExecute(() =>
       {
-        var config = GetConfiguration(configArgument.Value);
+        if (!configArgument.HasValue)
+        {
+          Exit($"Please specify a valid configArgument argument");
+        }
+
+        var config = GetConfiguration(configArgument.Value!);
         var domain = domainOption.HasValue()
           ? domainOption.Value()
           : config.Domain;
+
+        if (string.IsNullOrWhiteSpace(domain))
+        {
+          Exit($"Please specify a valid domain option!");
+        }
 
         // further optional args for testing purposes
         // -h|--headless - for displaying the E2E in the actual browser
         // -s|--slow - for executing the E2E tests slowly
 
         // if it fails return 1 otherwise 0
-        Runner runner = new Runner(config, domain);
+        Runner runner = new Runner(config, domain!);
         return runner.Run()
           ? 0
           : 1;
@@ -71,18 +86,18 @@ class Program
 
   static SmokyConfiguration GetConfiguration(string file)
   {
-    SmokyConfiguration configuration = null;
+    SmokyConfiguration? configuration = null;
     try
     {
       WriteLine($"Reading config from file '{file}'");
-      configuration = File.ReadAllText(file).FromJson<SmokyConfiguration>();
+      configuration = File.ReadAllText(file)
+        .FromJson<SmokyConfiguration>();
     }
     catch (Exception ex)
     {
-      var reason = $"Error in reading config file! Exception: '{ex.Message}'";
-      Exit(reason);
+      Exit($"Error in reading config file! Exception: '{ex.Message}'");
     }
 
-    return configuration;
+    return configuration!;
   }
 }

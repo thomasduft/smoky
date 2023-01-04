@@ -1,25 +1,32 @@
-using System.Collections.Generic;
-
 namespace tomware.Smoky;
 
 internal class E2ETest
 {
   public string Name { get; set; } = string.Empty;
   public string Route { get; set; } = string.Empty;
-  public List<E2EAssertion> Assertions { get; set; } = new List<E2EAssertion>();
-  public List<E2ECommand> Commands { get; set; } = new List<E2ECommand>();
+  public List<E2EArrange> Arrange { get; set; } = new List<E2EArrange>();
+  public E2EAct? Act { get; set; }
+  public List<E2EAssert> Assert { get; set; } = new List<E2EAssert>();
 }
 
-internal class E2EAssertion
+internal class E2ETestBase
 {
   public string Name { get; set; } = string.Empty;
   public string Selector { get; set; } = string.Empty;
-  public string Expected { get; set; } = string.Empty;
 }
 
-internal class E2ECommand
+internal class E2EArrange : E2ETestBase
 {
-  public string Name { get; set; } = string.Empty;
   public string Input { get; set; } = string.Empty;
-  public string Selector { get; set; } = string.Empty;
+}
+
+internal class E2EAct : E2ETestBase
+{
+  public bool Click { get; set; } = false;
+  public bool IsLogin { get; set; } = false;
+}
+
+internal class E2EAssert : E2ETestBase
+{
+  public string Expected { get; set; } = string.Empty;
 }

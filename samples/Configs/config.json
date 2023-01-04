@@ -17,38 +17,42 @@
     ],
     "E2ETests": [
       {
-        "Name": "Should display login page",
+        "Name": "Should login",
         "Route": "Login",
-        "Assertions": [
+        "Arrange": [
           {
-            "Name": "Should display Username label",
-            "Selector": "label[for=Input_Username]",
-            "Expected": "Username2"
+            "Name": "Should enter username",
+            "Selector": "input#Input_Username",
+            "Input": "admin"
           },
           {
-            "Name": "Should display Password label",
-            "Selector": "label[for=Input_Password]",
-            "Expected": "Password"
+            "Name": "Should enter password",
+            "Selector": "input#Input_Password",
+            "Input": "password"
+          }
+        ],
+        "Act": {
+          "Name": "Should click login",
+          "Selector": "button[type=submit]",
+          "Click": true,
+          "IsLogin": true
+        },
+        "Assert": [
+          {
+            "Name": "Should display Logout button",
+            "Selector": "button[type=submit]",
+            "Expected": "Logout"
           }
         ]
       },
       {
-        "Name": "Should login",
-        "Route": "Login",
-        "Commands": [
+        "Name": "Should display holiday page",
+        "Route": "holiday",
+        "Assert": [
           {
-            "Name": "Should enter username",
-            "Input": "admin",
-            "Selector": ""
-          },
-          {
-            "Name": "Should enter password",
-            "Input": "password",
-            "Selector": ""
-          },
-          {
-            "Name": "Should click login",
-            "Selector": ""
+            "Name": "Should display title HOLIDAYS",
+            "Selector": "h3",
+            "Expected": "HOLIDAYS"
           }
         ]
       }

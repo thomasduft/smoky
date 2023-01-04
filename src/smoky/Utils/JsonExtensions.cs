@@ -11,8 +11,13 @@ internal static class JsonExtensions
     WriteIndented = true
   };
 
-  public static T FromJson<T>(this string json) =>
-      JsonSerializer.Deserialize<T>(json, _jsonOptions);
+  public static T FromJson<T>(this string json)
+  {
+    var result = JsonSerializer.Deserialize<T>(json, _jsonOptions);
+    if (result is null) throw new InvalidDataException("Json string could not be deserialized");
+
+    return result;
+  }
 
   public static string ToJson<T>(this T obj) =>
       JsonSerializer.Serialize<T>(obj, _jsonOptions);
