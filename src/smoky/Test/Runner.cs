@@ -11,13 +11,14 @@ internal class Runner
     _domain = domain;
   }
 
-  public bool Run()
+  public async Task<bool> Run(CancellationToken cancellationToken)
   {
+    ConsoleHelper.WriteLineYellow("Starting smoke test execution...");
+    
     var results = new List<TestResult>();
 
-    RunHealthCheckTests(results);
-
-    RunE2ETests(results);
+    await RunHealthCheckTests(results, cancellationToken);
+    await RunE2ETests(results, cancellationToken);
 
     // Write failed tests to console
     var success = !results.Any(r => r.Status == TestStatus.Failed);
@@ -29,33 +30,45 @@ internal class Runner
         ConsoleHelper.WriteLineError($"- Name: {result.Name}, Actual/Error: {result.FailCause}");
       }
     }
+    else
+    {
+      ConsoleHelper.WriteLineSuccess($"'{results.Count()}' tests successfully passed...");
+    }
 
     return success;
   }
 
-  private void RunHealthCheckTests(List<TestResult> results)
+  private async Task RunHealthCheckTests(
+    List<TestResult> results,
+    CancellationToken cancellationToken
+  )
   {
     foreach (var healthTest in _configuration.Tests.HealthTests)
     {
       var executor = new HealthCheckExecutor(healthTest);
-      var result = executor
-        .ExecuteAsync(
-          _configuration.Domain,
-          CancellationToken.None
-        ).GetAwaiter().GetResult();
+      var result = await executor.ExecuteAsync(
+        _configuration.Domain,
+        cancellationToken
+      );
       results.Add(result);
     }
   }
 
-  private void RunE2ETests(List<TestResult> results)
+  private async Task RunE2ETests(
+    List<TestResult> results,
+    CancellationToken cancellationToken
+  )
   {
-    var executor = new PlaywrightExecutor(_configuration.Headless, _configuration.Slow);
-    var result = executor
-      .ExecuteAsync(
+    var executor = new PlaywrightExecutor(
+      _configuration.Headless,
+      _configuration.Slow,
+      _configuration.Timeout
+    );
+    var result = await executor.ExecuteAsync(
         _configuration.Domain,
         _configuration.Tests.E2ETests,
-        CancellationToken.None
-      ).GetAwaiter().GetResult();
+        cancellationToken
+      );
     results.AddRange(result);
   }
 }

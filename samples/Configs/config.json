@@ -1,7 +1,8 @@
 {
   "Domain": "https://localhost:5001",
   "Headless": true,
-  "Slow": true,
+  "Slow": false,
+  "Timeout": 20000,
   "Tests": {
     "HealthTests": [
       {

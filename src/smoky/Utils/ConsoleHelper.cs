@@ -1,5 +1,3 @@
-using System;
-
 namespace tomware.Smoky;
 
 internal static class ConsoleHelper

@@ -1,5 +1,3 @@
-using System.Net.Http;
-
 namespace tomware.Smoky;
 
 internal class Pinger
@@ -17,20 +15,22 @@ internal class Pinger
     });
   }
 
-  public bool Ping()
+  public async Task<bool> Ping(CancellationToken cancellationToken)
   {
-    ConsoleHelper.WriteLineYellow($"Trying contact domain '{_domain}'");
     bool success = false;
 
     try
     {
-      _client.GetAsync(_domain).GetAwaiter().GetResult();
+      ConsoleHelper.WriteLineYellow($"Contacting domain '{_domain}'...");
+
+      await _client.GetAsync(_domain);
       // usually check sth. like this = response.IsSuccessStatusCode;
       // but since we get an Unauthorized HttpStatus we just say as 
       // long as we do not get an exceptions somehow the domain was
       // in reach!
-
       success = true;
+
+      ConsoleHelper.WriteLineSuccess($"Domain '{_domain}' successfully contacted...");
     }
     catch (HttpRequestException ex)
     {

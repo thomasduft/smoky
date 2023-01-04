@@ -17,5 +17,10 @@ internal class SmokyConfiguration
   /// </summary>
   public bool Slow { get; set; } = false;
 
+  /// <summary>
+  /// Request timeout for executing the E2E tests (defaults to 30000 = 30s).
+  /// </summary>
+  public int Timeout { get; set; } = 30000;
+
   public Tests Tests { get; set; } = new Tests();
 }
