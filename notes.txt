@@ -1,7 +1,5 @@
 TODO:
 
-- [ ] find a way to properly distinguish between successfully ping/call a domain
-
 
 ---------------------------------------------------------------------------------------------------
 
