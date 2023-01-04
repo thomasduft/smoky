@@ -1,5 +1,7 @@
 TODO:
 
+- [ ] Remove the use of System.Text.Json and only use NewtonSoft as long as there is no support for querying JSON
+  - see: HealthCheckExecutor
 
 ---------------------------------------------------------------------------------------------------
 

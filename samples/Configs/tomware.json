@@ -2,7 +2,7 @@
   "Domain": "https://tomware.ch",
   "Headless": true,
   "Slow": false,
-  "Timeout": 20000,
+  "Timeout": 10000,
   "Tests": {
     "E2ETests": [
       {
