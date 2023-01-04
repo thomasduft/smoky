@@ -1,0 +1,57 @@
+{
+  "Domain": "https://tomware.ch",
+  "Headless": true,
+  "Slow": false,
+  "Timeout": 20000,
+  "Tests": {
+    "E2ETests": [
+      {
+        "Name": "Should check index page",
+        "Route": "",
+        "Assert": [
+          {
+            "Name": "First menu item should be of text home",
+            "Selector": ".header__nav>ul>li:first-child>a",
+            "Expected": "home"
+          },
+          {
+            "Name": "Second menu item should be of text services",
+            "Selector": ".header__nav>ul>li:nth-child(2)>a",
+            "Expected": "services"
+          },
+          {
+            "Name": "Third menu item should be of text posts",
+            "Selector": ".header__nav>ul>li:nth-child(3)>a",
+            "Expected": "posts"
+          },
+          {
+            "Name": "Forth menu item should be of text work",
+            "Selector": ".header__nav>ul>li:nth-child(4)>a",
+            "Expected": "work"
+          },
+          {
+            "Name": "Fith menu item should be of text cv",
+            "Selector": ".header__nav>ul>li:last-child>a",
+            "Expected": "cv"
+          },
+          {
+            "Name": "Should display services title",
+            "Selector": "section#services>h2",
+            "Expected": "Services"
+          }
+        ]
+      },
+      {
+        "Name": "Should check cv page",
+        "Route": "cv",
+        "Assert": [
+          {
+            "Name": "Title should be of text Professional CV",
+            "Selector": "h1#Professional-CV",
+            "Expected": "<a href=\"#Professional-CV\" class=\"headerlink\" title=\"Professional CV\"></a>Professional CV"
+          }
+        ]
+      }
+    ]
+  }
+}
