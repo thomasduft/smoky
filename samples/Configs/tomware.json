@@ -1,6 +1,6 @@
 {
   "Domain": "https://tomware.ch",
-  "Headless": false,
+  "Headless": true,
   "Slow": 500,
   "Timeout": 10000,
   "Channel": "chrome",
