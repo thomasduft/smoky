@@ -11,7 +11,7 @@ Using a configuration file, you can easily configure acceptance smoke tests. The
 - HealthCheck tests: These tests make it possible to check the health of a web application
 - E2E tests: Leveraging [Playwright for .NET](https://playwright.dev/dotnet/) these tests allow simple E2E tests to be run using a headless browser (currently Chrome-based only)
 
-> The basic intent of `smoky` is to perform some smoke tests on a web application during the integration deployment pipeline and get instant feedback on whether the deployment itself and the web application is up and running as expected.
+> The basic intent of `smoky` is to perform some smoke tests on a web application during the integration deployment pipeline and get instant feedback on whether the deployment succeeded and the web application is up and running as expected.
 
 ## Usage
 
