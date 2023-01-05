@@ -7,9 +7,6 @@ TODO:
   - pwsh bin/Debug/netX/playwright.ps1 install
   - npm install playwright
 
-- [ ] JSON Schema for config.json
-
-
 ---------------------------------------------------------------------------------------------------
 Notes:
 
