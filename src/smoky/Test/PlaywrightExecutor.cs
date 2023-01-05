@@ -12,12 +12,14 @@ internal class PlaywrightExecutor
   private readonly bool _headless;
   private readonly bool _slow;
   private readonly int _timeout;
+  private readonly string _channel;
 
-  public PlaywrightExecutor(bool headless, bool slow, int timeout)
+  public PlaywrightExecutor(bool headless, bool slow, int timeout, string channel)
   {
     _headless = headless;
     _slow = slow;
     _timeout = timeout;
+    _channel = channel;
   }
 
   public async Task<IEnumerable<TestResult>> ExecuteAsync(
@@ -29,11 +31,13 @@ internal class PlaywrightExecutor
     var results = new List<TestResult>();
 
     using var playwright = await Playwright.CreateAsync();
-    await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-    {
-      Headless = _headless,
-      SlowMo = _slow ? 100 : null // by N milliseconds per operation,
-    });
+    await using var browser = await playwright.Chromium
+      .LaunchAsync(new BrowserTypeLaunchOptions
+      {
+        Channel = !string.IsNullOrWhiteSpace(_channel) ? _channel : null,
+        Headless = _headless,
+        SlowMo = _slow ? 100 : null // by N milliseconds per operation,
+      });
 
     var context = await GetBrowserContext(browser);
     var page = await context.NewPageAsync();
@@ -58,6 +62,8 @@ internal class PlaywrightExecutor
     {
       var url = $"{domain}/{config.Route}";
       await page.GotoAsync(url);
+      
+      // being safe and try again in certain case :-)
       if (!page.Url.StartsWith(url))
       {
         await page.GotoAsync(url);

@@ -3,6 +3,7 @@
   "Headless": true,
   "Slow": false,
   "Timeout": 10000,
+  "Channel": "chrome",
   "Tests": {
     "E2ETests": [
       {

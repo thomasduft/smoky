@@ -2,7 +2,8 @@
   "Domain": "https://localhost:5001",
   "Headless": true,
   "Slow": false,
-  "Timeout": 20000,
+  "Timeout": 10000,
+  "Channel": "chrome",
   "Tests": {
     "HealthTests": [
       {

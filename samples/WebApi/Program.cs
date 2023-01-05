@@ -34,7 +34,6 @@ try
 
   // HealthChecks
   // see: https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-7.0
-  // 
   builder.Services
     .AddHealthChecks()
     .AddCheck<UsersSeededHealthCheck>(nameof(UsersSeededHealthCheck));

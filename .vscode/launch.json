@@ -42,7 +42,7 @@
       "program": "${workspaceFolder}/src/smoky/bin/Debug/net7.0/tomware.Smoky.dll",
       "args": [
         "test",
-        "../../samples/Configs/tomware.json"
+        "../../samples/Configs/config.json"
       ],
       "cwd": "${workspaceFolder}/src/smoky",
       "stopAtEntry": false

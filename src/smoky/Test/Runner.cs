@@ -62,7 +62,8 @@ internal class Runner
     var executor = new PlaywrightExecutor(
       _configuration.Headless,
       _configuration.Slow,
-      _configuration.Timeout
+      _configuration.Timeout,
+      _configuration.Channel
     );
     var result = await executor.ExecuteAsync(
         _configuration.Domain,

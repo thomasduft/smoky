@@ -7,6 +7,15 @@ TODO:
   - pwsh bin/Debug/netX/playwright.ps1 install
   - npm install playwright
 
+- [ ] JSON Schema for config.json
+
+
+---------------------------------------------------------------------------------------------------
+Notes:
+
+- Channels: Browser distribution channel.
+  - Supported values are "chrome", "chrome-beta", "chrome-dev", "chrome-canary", "msedge", "msedge-beta", "msedge-dev", "msedge-canary". Read more about using Google Chrome and Microsoft Edge.
+
 ---------------------------------------------------------------------------------------------------
 
 export PATH="$PATH:/home/vscode/.dotnet/tools"

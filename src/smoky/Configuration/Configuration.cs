@@ -22,5 +22,12 @@ internal class SmokyConfiguration
   /// </summary>
   public int Timeout { get; set; } = 30000;
 
+  /// <summary>
+  /// Browser distribution channel.
+  /// Supported values are:"chrome", "chrome-beta", "chrome-dev", "chrome-canary", "msedge", "msedge-beta", "msedge-dev", "msedge-canary".
+  /// </summary>
+  /// <value></value>
+  public string Channel { get; set; } = string.Empty;
+
   public Tests Tests { get; set; } = new Tests();
 }
