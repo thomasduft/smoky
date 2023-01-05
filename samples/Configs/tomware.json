@@ -1,7 +1,7 @@
 {
   "$schema": "smoky-schema.json",
   "Domain": "https://tomware.ch",
-  "Channel": "chrome",
+  "Channel": "chromium",
   "Tests": {
     "E2ETests": [
       {

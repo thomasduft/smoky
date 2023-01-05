@@ -20,7 +20,8 @@
         "chrome",
         "chrome-dev",
         "msedge",
-        "msedge-dev"
+        "msedge-dev",
+        "chromium"
       ]
     },
     "Tests": {
