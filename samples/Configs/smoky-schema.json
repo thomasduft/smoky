@@ -1,0 +1,229 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "Domain": {
+      "type": "string"
+    },
+    "Headless": {
+      "type": "boolean"
+    },
+    "Slow": {
+      "type": "integer"
+    },
+    "Timeout": {
+      "type": "integer"
+    },
+    "Channel": {
+      "type": "string",
+      "enum": [
+        "chrome",
+        "chrome-dev",
+        "msedge",
+        "msedge-dev"
+      ]
+    },
+    "Tests": {
+      "type": "object",
+      "properties": {
+        "HealthTests": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Expected": {
+                  "type": "string"
+                },
+                "PropertyPath": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "Name",
+                "Expected",
+                "PropertyPath"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Expected": {
+                  "type": "string"
+                },
+                "PropertyPath": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "Name",
+                "Expected",
+                "PropertyPath"
+              ]
+            }
+          ]
+        },
+        "E2ETests": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Route": {
+                  "type": "string"
+                },
+                "Arrange": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "Name": {
+                          "type": "string"
+                        },
+                        "Selector": {
+                          "type": "string"
+                        },
+                        "Input": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "Name",
+                        "Selector",
+                        "Input"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "Name": {
+                          "type": "string"
+                        },
+                        "Selector": {
+                          "type": "string"
+                        },
+                        "Input": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "Name",
+                        "Selector",
+                        "Input"
+                      ]
+                    }
+                  ]
+                },
+                "Act": {
+                  "type": "object",
+                  "properties": {
+                    "Name": {
+                      "type": "string"
+                    },
+                    "Selector": {
+                      "type": "string"
+                    },
+                    "Click": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "Name",
+                    "Selector",
+                    "Click"
+                  ]
+                },
+                "Assert": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "Name": {
+                          "type": "string"
+                        },
+                        "Selector": {
+                          "type": "string"
+                        },
+                        "Expected": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "Name",
+                        "Selector",
+                        "Expected"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "Name",
+                "Route",
+                "Arrange",
+                "Act",
+                "Assert"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Route": {
+                  "type": "string"
+                },
+                "Assert": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "Name": {
+                          "type": "string"
+                        },
+                        "Selector": {
+                          "type": "string"
+                        },
+                        "Expected": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "Name",
+                        "Selector",
+                        "Expected"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "Name",
+                "Route",
+                "Assert"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "Domain",
+    "Channel",
+    "Tests"
+  ]
+}

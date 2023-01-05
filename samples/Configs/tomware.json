@@ -1,8 +1,6 @@
 {
+  "$schema": "smoky-schema.json",
   "Domain": "https://tomware.ch",
-  "Headless": true,
-  "Slow": 500,
-  "Timeout": 10000,
   "Channel": "chrome",
   "Tests": {
     "E2ETests": [
