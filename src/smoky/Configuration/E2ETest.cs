@@ -23,7 +23,6 @@ internal class E2EArrange : E2ETestBase
 internal class E2EAct : E2ETestBase
 {
   public bool Click { get; set; } = false;
-  public bool IsLogin { get; set; } = false;
 }
 
 internal class E2EAssert : E2ETestBase

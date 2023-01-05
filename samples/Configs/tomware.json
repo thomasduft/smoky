@@ -30,7 +30,7 @@
             "Expected": "work"
           },
           {
-            "Name": "Fith menu item should be of text cv",
+            "Name": "Fifth menu item should be of text cv",
             "Selector": ".header__nav>ul>li:last-child>a",
             "Expected": "cv"
           },

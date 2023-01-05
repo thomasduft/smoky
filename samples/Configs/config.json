@@ -35,8 +35,7 @@
         "Act": {
           "Name": "Should click login",
           "Selector": "button[type=submit]",
-          "Click": true,
-          "IsLogin": true
+          "Click": true
         },
         "Assert": [
           {

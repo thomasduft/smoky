@@ -27,6 +27,7 @@ Commands:
 
 Run 'smoky [command] -?|-h|--help' for more information about a command.
 ```
+
 ## Configuration sample
 
 ```json
@@ -67,8 +68,7 @@ Run 'smoky [command] -?|-h|--help' for more information about a command.
         "Act": {
           "Name": "Should click login",
           "Selector": "button[type=submit]",
-          "Click": true,
-          "IsLogin": true
+          "Click": true
         },
         "Assert": [
           {
