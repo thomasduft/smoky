@@ -3,6 +3,9 @@ TODO:
 - [ ] Remove the use of System.Text.Json and only use NewtonSoft as long as there is no support for querying JSON
   - see: HealthCheckExecutor
 
+- [ ] install playwright at first if not yet installed
+  - pwsh bin/Debug/netX/playwright.ps1 install
+
 ---------------------------------------------------------------------------------------------------
 
 export PATH="$PATH:/home/vscode/.dotnet/tools"
