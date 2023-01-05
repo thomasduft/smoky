@@ -10,11 +10,11 @@ namespace tomware.Smoky;
 internal class PlaywrightExecutor
 {
   private readonly bool _headless;
-  private readonly bool _slow;
+  private readonly int? _slow;
   private readonly int _timeout;
   private readonly string _channel;
 
-  public PlaywrightExecutor(bool headless, bool slow, int timeout, string channel)
+  public PlaywrightExecutor(bool headless, int? slow, int timeout, string channel)
   {
     _headless = headless;
     _slow = slow;
@@ -36,7 +36,7 @@ internal class PlaywrightExecutor
       {
         Channel = !string.IsNullOrWhiteSpace(_channel) ? _channel : null,
         Headless = _headless,
-        SlowMo = _slow ? 100 : null // by N milliseconds per operation,
+        SlowMo = _slow // by N milliseconds per operation,
       });
 
     var context = await GetBrowserContext(browser);
