@@ -39,7 +39,8 @@ internal class HealthCheckExecutor
       var response = await _client.GetAsync(requestUri);
       if (!response.IsSuccessStatusCode)
       {
-        var responseContent = await response.Content.ReadAsStringAsync();
+        // Question: How to deal with proxies?
+
         return TestResult.FailedWithOtherReason(
           _config.Name,
           response.ReasonPhrase ?? $"Could not get any valid response from url '{requestUri}'"
