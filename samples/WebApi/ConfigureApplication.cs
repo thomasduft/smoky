@@ -62,9 +62,11 @@ public static class ConfigureApplication
     {
       "/home",
       "/dispatch",
-      "/admin",
       "/holiday",
       "/issue",
+      "/admin",
+      "/admin/workflows",
+      "/admin/queue",
       "/forbidden"
     };
 

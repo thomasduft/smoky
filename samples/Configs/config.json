@@ -1,10 +1,10 @@
 {
   "$schema": "smoky-schema.json",
   "Domain": "https://localhost:5001",
-  "Headless": true,
+  "Headless": false,
   "Slow": 500,
   "Timeout": 5000,
-  "Channel": "chromium",
+  "Channel": "chrome",
   "Tests": {
     "HealthTests": [
       {
@@ -55,6 +55,32 @@
             "Name": "Should display title Holidays",
             "Selector": "h3",
             "Expected": "Holidays"
+          }
+        ]
+      },
+      {
+        "Name": "Should display issue page",
+        "Route": "issue",
+        "Assert": [
+          {
+            "Name": "Should display title Issues",
+            "Selector": "h3",
+            "Expected": "Issues"
+          }
+        ]
+      },
+      {
+        "Name": "Should display admin/workflows page",
+        "Route": "home",
+        "Act": {
+          "Name": "Should click Workflows nav item",
+          "Selector": "tw-sidebar>.sidebar__content>ul>li:last-child>span>ul>li:first-child>a"
+        },
+        "Assert": [
+          {
+            "Name": "Should display title Instances",
+            "Selector": "h3",
+            "Expected": "Instances"
           }
         ]
       }
