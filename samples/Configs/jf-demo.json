@@ -1,0 +1,76 @@
+{
+  "$schema": "smoky-schema.json",
+  "Domain": "https://demo.playone.buhlergroup.com",
+  "Headless": false,
+  "Slow": 500,
+  "Timeout": 5000,
+  "Channel": "chrome",
+  "Tests": {
+    "HealthTests": [
+      {
+        "Name": "System is healthy",
+        "Expected": "Healthy",
+        "PropertyPath": "status",
+        "Route": "api/health"
+      },
+      {
+        "Name": "Variables is healthy",
+        "Expected": "Healthy",
+        "PropertyPath": "results[0].status",
+        "Route": "api/health"
+      },
+      {
+        "Name": "FrontendChannel is healthy",
+        "Expected": "Healthy",
+        "PropertyPath": "results[1].status",
+        "Route": "api/health"
+      }
+    ],
+    "E2ETests": [
+      {
+        "Name": "Should go to login page",
+        "Route": "",
+        "Assert": [
+          {
+            "Name": "Should display Logout button",
+            "Selector": "jf-card>div:first-child>div:first-child",
+            "Expected": "Login"
+          }
+        ]
+      },
+      {
+        "Name": "Should login",
+        "Route": "",
+        "Arrange": [
+          {
+            "Name": "Should select username",
+            "Selector": "#bui-form-field-control-1",
+            "Input": "BuhlerEngineer"
+          },
+          {
+            "Name": "Should enter pin",
+            "Selector": "input[type=password]",
+            "Input": "9240"
+          }
+        ],
+        "Act": {
+          "Name": "Should click login",
+          "Selector": "button[type=submit]",
+          "Click": true
+        },
+        "Assert": [
+          {
+            "Name": "Should display Logout button",
+            "Selector": "bui-header-title",
+            "Expected": "Demo App"
+          },
+          {
+            "Name": "Should display Logout button",
+            "Selector": "bui-navigation-button[data-testid=home__navigation-button]",
+            "Expected": "Demo App"
+          }
+        ]
+      }
+    ]
+  }
+}

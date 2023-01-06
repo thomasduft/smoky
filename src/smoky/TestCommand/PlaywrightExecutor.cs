@@ -60,13 +60,13 @@ internal class PlaywrightExecutor
   {
     try
     {
-      var url = $"{domain}/{config.Route}";
-      await page.GotoAsync(url);
+      var requestUri = $"{domain}/{config.Route}";
+      await page.GotoAsync(requestUri);
       
       // being safe and try again in certain case :-)
-      if (!page.Url.StartsWith(url))
+      if (!page.Url.StartsWith(requestUri))
       {
-        await page.GotoAsync(url);
+        await page.GotoAsync(requestUri);
       }
 
       // Arrange

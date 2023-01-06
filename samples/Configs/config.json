@@ -10,12 +10,14 @@
       {
         "Name": "System is healthy",
         "Expected": "Healthy",
-        "PropertyPath": "status"
+        "PropertyPath": "status",
+        "Route": "health"
       },
       {
         "Name": "All users seeded",
         "Expected": "Healthy",
-        "PropertyPath": "info[0].status"
+        "PropertyPath": "info[0].status",
+        "Route": "health"
       }
     ],
     "E2ETests": [

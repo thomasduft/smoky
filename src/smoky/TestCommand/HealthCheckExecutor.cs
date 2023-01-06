@@ -23,8 +23,7 @@ internal class HealthCheckExecutor
     CancellationToken cancellationToken
   )
   {
-    // TODO: provide health endpoint as configuration
-    var url = $"{domain}/health";
+    var requestUri = $"{domain}/{_config.Route}";
 
     var propertyPath = _config.PropertyPath;
     if (string.IsNullOrWhiteSpace(propertyPath))
@@ -37,12 +36,13 @@ internal class HealthCheckExecutor
 
     try
     {
-      var response = await _client.GetAsync(url);
+      var response = await _client.GetAsync(requestUri);
       if (!response.IsSuccessStatusCode)
       {
+        var responseContent = await response.Content.ReadAsStringAsync();
         return TestResult.FailedWithOtherReason(
           _config.Name,
-          response.ReasonPhrase ?? $"Could not get any valid response from url '{url}'"
+          response.ReasonPhrase ?? $"Could not get any valid response from url '{requestUri}'"
         );
       }
 

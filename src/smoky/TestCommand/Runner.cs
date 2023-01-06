@@ -14,11 +14,14 @@ internal class Runner
   public async Task<bool> Run(CancellationToken cancellationToken)
   {
     ConsoleHelper.WriteLineYellow("Starting smoke test execution...");
-    
+
     var results = new List<TestResult>();
 
-    await RunHealthCheckTests(results, cancellationToken);
-    await RunE2ETests(results, cancellationToken);
+    if (_configuration.Tests.HealthTests.Any())
+      await RunHealthCheckTests(results, cancellationToken);
+
+    if (_configuration.Tests.E2ETests.Any())
+      await RunE2ETests(results, cancellationToken);
 
     // Write failed tests to console
     var success = !results.Any(r => r.Status == TestStatus.Failed);

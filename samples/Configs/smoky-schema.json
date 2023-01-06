@@ -41,12 +41,16 @@
                 },
                 "PropertyPath": {
                   "type": "string"
+                },
+                "Route": {
+                  "type": "string"
                 }
               },
               "required": [
                 "Name",
                 "Expected",
-                "PropertyPath"
+                "PropertyPath",
+                "Route"
               ]
             },
             {
