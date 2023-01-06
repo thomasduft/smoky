@@ -7,12 +7,24 @@ TODO:
   - pwsh bin/Debug/netX/playwright.ps1 install
   - npm install playwright
 
----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+Playwright API:
+
+- ClickAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-click
+- FillAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-fill
+- GetByText - https://playwright.dev/dotnet/docs/api/class-locator#locator-get-by-text
+- InputValueAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-input-value
+- SelectOptionAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-select-option
+- SetCheckedAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-set-checked
+
+Interesting:
+- ScreenshotAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-screenshot
+----------------------------------------------------------------------------------------------------
 Notes:
 
 - Channels: Browser distribution channel.
   - Supported values are "chrome", "chrome-beta", "chrome-dev", "chrome-canary", "msedge", "msedge-beta", "msedge-dev", "msedge-canary". Read more about using Google Chrome and Microsoft Edge.
 
----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 
 export PATH="$PATH:/home/vscode/.dotnet/tools"
