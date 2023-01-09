@@ -11,7 +11,7 @@ internal class HealthCheckExecutor
   {
     _config = config;
 
-    // below HttpClientHanlder disables self signed certificates issues
+    // below HttpClientHandler disables self signed certificates issues
     _client = new HttpClient(new HttpClientHandler
     {
       ServerCertificateCustomValidationCallback = (s, ce, ca, p) => true
