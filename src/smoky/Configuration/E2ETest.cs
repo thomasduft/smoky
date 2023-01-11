@@ -1,31 +1,47 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace tomware.Smoky;
 
 internal class E2ETest
 {
   public string Name { get; set; } = string.Empty;
   public string Route { get; set; } = string.Empty;
-  public List<E2EArrange> Arrange { get; set; } = new List<E2EArrange>();
-  public E2EAct? Act { get; set; }
-  public List<E2EAssert> Assert { get; set; } = new List<E2EAssert>();
+  public List<E2ETestStep> Arrange { get; set; } = new List<E2ETestStep>();
+  public E2ETestStep? Act { get; set; }
+  public List<E2ETestStep> Assert { get; set; } = new List<E2ETestStep>();
 }
 
-internal class E2ETestBase
+internal class E2ETestStep
 {
-  public string Name { get; set; } = string.Empty;
-  public string Selector { get; set; } = string.Empty;
-}
+  public string Step { get; set; } = string.Empty;
 
-internal class E2EArrange : E2ETestBase
-{
-  public string Input { get; set; } = string.Empty;
-}
+  [JsonConverter(typeof(StringEnumConverter))]
+  public LocatorType LocatorType { get; set; }
 
-internal class E2EAct : E2ETestBase
-{
-  public bool Click { get; set; } = false;
-}
+  public string Text { get; set; } = string.Empty;
 
-internal class E2EAssert : E2ETestBase
-{
+  public string Value { get; set; } = string.Empty;
+
+  [JsonConverter(typeof(StringEnumConverter))]
+  public Microsoft.Playwright.AriaRole AriaRole { get; set; }
+
+  [JsonConverter(typeof(StringEnumConverter))]
+  public ActionType Action { get; set; }
+
   public string Expected { get; set; } = string.Empty;
+}
+
+internal enum LocatorType
+{
+  GetByText,
+  GetByLabel,
+  GetByRole
+}
+
+internal enum ActionType
+{
+  IsVisible,
+  Click,
+  Fill
 }

@@ -16,9 +16,13 @@ Playwright API:
 - InputValueAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-input-value
 - SelectOptionAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-select-option
 - SetCheckedAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-set-checked
+- IsVisibleAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-is-visible
 
 Interesting:
 - ScreenshotAsync - https://playwright.dev/dotnet/docs/api/class-locator#locator-screenshot
+
+CLI Commands
+- pwsh bin/Debug/net7.0/playwright.ps1 codegen --channel chrome --ignore-https-errors https://localhost:5001
 ----------------------------------------------------------------------------------------------------
 Notes:
 
@@ -28,3 +32,76 @@ Notes:
 ----------------------------------------------------------------------------------------------------
 
 export PATH="$PATH:/home/vscode/.dotnet/tools"
+
+----------------------------------------------------------------------------------------------------
+Label: GetByText
+Input: GetByLabel
+Button: GetByRole(AriaRole.Button, new() { Name = "Login" })
+
+Headings: GetByRole(AriaRole.Heading, new() { Name = "Workflows" }) => IsVisibleAsync()
+Links: GetByRole(AriaRole.Link, new() { Name = "Holiday" }) => IsVisibleAsync() / ClickAsync();
+
+----------------------------------------------------------------------------------------------------
+using Microsoft.Playwright;
+using System;
+using System.Threading.Tasks;
+
+class Program
+{
+    public static async Task Main()
+    {
+        using var playwright = await Playwright.CreateAsync();
+        await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+        {
+            Channel = "chrome",
+            Headless = false,
+        });
+        var context = await browser.NewContextAsync(new BrowserNewContextOptions
+        {
+            IgnoreHTTPSErrors = true,
+        });
+
+        var page = await context.NewPageAsync();
+
+        await page.GotoAsync("https://localhost:5001/");
+
+        await page.GotoAsync("https://localhost:5001/home");
+
+        await page.GotoAsync("https://localhost:5001/Login?ReturnUrl=%2Fconnect%2Fauthorize%3Fresponse_type%3Dcode%26client_id%3Dspa_webclient%26state%3DdmpnRmRQaElDZkZ0dnp3bFpxenMycVM2azF0Z2k5ZkxqNkFOM2RYWVR5Tlh4%26redirect_uri%3Dhttps%253A%252F%252Flocalhost%253A5001%26scope%3Dopenid%2520profile%2520webapi_scope%26code_challenge%3DJaw_cARMM-I42jOjA0b87JXJ08cpxr-__g1jo0B0DJU%26code_challenge_method%3DS256%26nonce%3DdmpnRmRQaElDZkZ0dnp3bFpxenMycVM2azF0Z2k5ZkxqNkFOM2RYWVR5Tlh4");
+
+        await page.GetByText("Username").ClickAsync();
+
+        await page.GetByText("Password").ClickAsync();
+
+        await page.GetByLabel("Username").ClickAsync();
+
+        await page.GetByLabel("Username").FillAsync("admin");
+
+        await page.GetByLabel("Username").PressAsync("Tab");
+
+        await page.GetByLabel("Password").FillAsync("password");
+
+        await page.GetByLabel("Password").PressAsync("Tab");
+
+        await page.GetByRole(AriaRole.Button, new() { Name = "Login" }).ClickAsync();
+
+        await page.GetByRole(AriaRole.Heading, new() { Name = "Workflows" }).ClickAsync();
+
+        await page.GetByRole(AriaRole.Link, new() { Name = "Holiday" }).ClickAsync();
+
+        await page.GetByRole(AriaRole.Heading, new() { Name = "Holidays" }).ClickAsync();
+
+        await page.GetByRole(AriaRole.Link, new() { Name = "Issue" }).ClickAsync();
+
+        await page.GetByRole(AriaRole.Heading, new() { Name = "Issues" }).ClickAsync();
+
+        await page.GetByRole(AriaRole.Link, new() { Name = "Workflows" }).ClickAsync();
+
+        await page.GetByRole(AriaRole.Heading, new() { Name = "Instances" }).ClickAsync();
+
+        await page.GetByRole(AriaRole.Link, new() { Name = "Log out" }).ClickAsync();
+
+        await page.GetByRole(AriaRole.Button, new() { Name = "Logout" }).ClickAsync();
+
+    }
+}

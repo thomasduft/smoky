@@ -14,6 +14,8 @@ internal class PlaywrightExecutor
   private readonly int _timeout;
   private readonly string _channel;
 
+  private string _requestUri = string.Empty;
+
   public PlaywrightExecutor(bool headless, int? slow, int timeout, string channel)
   {
     _headless = headless;
@@ -61,42 +63,42 @@ internal class PlaywrightExecutor
     try
     {
       var requestUri = $"{domain}/{config.Route}";
-      await page.GotoAsync(requestUri);
-      
-      // being safe and try again in certain case :-)
-      if (!page.Url.StartsWith(requestUri))
+      if (requestUri != _requestUri)
       {
         await page.GotoAsync(requestUri);
+        _requestUri = requestUri;
+
+        // being safe and try again in certain case :-)
+        if (!page.Url.StartsWith(requestUri))
+        {
+          await page.GotoAsync(requestUri);
+        }
       }
 
       // Arrange
       if (config.Arrange is not null && config.Arrange.Any())
       {
-        foreach (var arrange in config.Arrange)
+        foreach (var arrangeStep in config.Arrange)
         {
-          await page.Locator(arrange.Selector).FillAsync(arrange.Input);
-          await Assertions
-            .Expect(page.Locator(arrange.Selector))
-            .ToHaveValueAsync(arrange.Input);
+          await ProcessStepAsync(page, arrangeStep);
         }
       }
 
       // Act
       if (config.Act is not null)
       {
-        await page.Locator(config.Act.Selector).ClickAsync();
+        await ProcessStepAsync(page, config.Act);
       }
 
       // Assert
       if (config.Assert is not null && config.Assert.Any())
       {
-        foreach (var assert in config.Assert)
+        foreach (var assertStep in config.Assert)
         {
-          // await page.Locator(assert.Selector).WaitForAsync();
-          var value = await page.Locator(assert.Selector).InnerHTMLAsync();
-          if (value != assert.Expected)
+          var value = await ProcessStepAsync(page, assertStep);
+          if (!value)
           {
-            return TestResult.Failed(assert.Name, value);
+            return TestResult.Failed(assertStep.Step, "couldn't be located or visible");
           }
         }
       }
@@ -123,9 +125,36 @@ internal class PlaywrightExecutor
     return context;
   }
 
-  private static string GetStoragePath()
+  private async Task<bool> ProcessStepAsync(IPage page, E2ETestStep step)
   {
-    var path = Path.Combine(Environment.CurrentDirectory, "state.json");
-    return path;
+    ILocator? locator = null;
+
+    if (step.LocatorType == LocatorType.GetByLabel)
+    {
+      locator = page.GetByLabel(step.Text);
+    }
+    else if (step.LocatorType == LocatorType.GetByRole)
+    {
+      locator = page.GetByRole(step.AriaRole, new() { Name = step.Text });
+    }
+    else
+    {
+      locator = page.GetByText(step.Text);
+    }
+
+    if (step.Action == ActionType.Click)
+    {
+      await locator.ClickAsync();
+    }
+    else if (step.Action == ActionType.Fill)
+    {
+      await locator.FillAsync(step.Value);
+    }
+    else
+    {
+      return await locator.IsVisibleAsync();
+    }
+
+    return await Task.FromResult(true);
   }
 }
