@@ -1,7 +1,8 @@
 TODO:
 
-- [ ] Remove the use of System.Text.Json and only use NewtonSoft as long as there is no support for querying JSON
-  - see: HealthCheckExecutor
+- [x] json schema
+  - see https://codebeautify.org/json-to-json-schema-generator
+  - "$schema": "smoky-schema.json",
 
 - [ ] install playwright at first if not yet installed
   - pwsh bin/Debug/netX/playwright.ps1 install

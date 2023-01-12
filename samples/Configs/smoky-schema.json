@@ -1,234 +1,170 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "properties": {
-    "Domain": {
-      "type": "string"
-    },
-    "Headless": {
-      "type": "boolean"
-    },
-    "Slow": {
-      "type": "integer"
-    },
-    "Timeout": {
-      "type": "integer"
-    },
-    "Channel": {
-      "type": "string",
-      "enum": [
-        "chrome",
-        "chrome-dev",
-        "msedge",
-        "msedge-dev",
-        "chromium"
-      ]
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/Configuration",
+  "definitions": {
+    "Configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Domain": {
+          "type": "string",
+          "format": "uri",
+          "qt-uri-protocols": [
+            "https"
+          ]
+        },
+        "Headless": {
+          "type": "boolean"
+        },
+        "Slow": {
+          "type": "integer"
+        },
+        "Timeout": {
+          "type": "integer"
+        },
+        "Channel": {
+          "type": "string"
+        },
+        "Tests": {
+          "$ref": "#/definitions/Tests"
+        }
+      },
+      "required": [
+        "Domain",
+        "Tests"
+      ],
+      "title": "Configuration"
     },
     "Tests": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "HealthTests": {
           "type": "array",
-          "items": [
-            {
-              "type": "object",
-              "properties": {
-                "Name": {
-                  "type": "string"
-                },
-                "Expected": {
-                  "type": "string"
-                },
-                "PropertyPath": {
-                  "type": "string"
-                },
-                "Route": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "Name",
-                "Expected",
-                "PropertyPath",
-                "Route"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "Name": {
-                  "type": "string"
-                },
-                "Expected": {
-                  "type": "string"
-                },
-                "PropertyPath": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "Name",
-                "Expected",
-                "PropertyPath"
-              ]
-            }
-          ]
+          "items": {
+            "$ref": "#/definitions/HealthTest"
+          }
         },
         "E2ETests": {
           "type": "array",
-          "items": [
-            {
-              "type": "object",
-              "properties": {
-                "Name": {
-                  "type": "string"
-                },
-                "Route": {
-                  "type": "string"
-                },
-                "Arrange": {
-                  "type": "array",
-                  "items": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "Name": {
-                          "type": "string"
-                        },
-                        "Selector": {
-                          "type": "string"
-                        },
-                        "Input": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "Name",
-                        "Selector",
-                        "Input"
-                      ]
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "Name": {
-                          "type": "string"
-                        },
-                        "Selector": {
-                          "type": "string"
-                        },
-                        "Input": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "Name",
-                        "Selector",
-                        "Input"
-                      ]
-                    }
-                  ]
-                },
-                "Act": {
-                  "type": "object",
-                  "properties": {
-                    "Name": {
-                      "type": "string"
-                    },
-                    "Selector": {
-                      "type": "string"
-                    },
-                    "Click": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "Name",
-                    "Selector",
-                    "Click"
-                  ]
-                },
-                "Assert": {
-                  "type": "array",
-                  "items": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "Name": {
-                          "type": "string"
-                        },
-                        "Selector": {
-                          "type": "string"
-                        },
-                        "Expected": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "Name",
-                        "Selector",
-                        "Expected"
-                      ]
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "Name",
-                "Route",
-                "Arrange",
-                "Act",
-                "Assert"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "Name": {
-                  "type": "string"
-                },
-                "Route": {
-                  "type": "string"
-                },
-                "Assert": {
-                  "type": "array",
-                  "items": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "Name": {
-                          "type": "string"
-                        },
-                        "Selector": {
-                          "type": "string"
-                        },
-                        "Expected": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "Name",
-                        "Selector",
-                        "Expected"
-                      ]
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "Name",
-                "Route",
-                "Assert"
-              ]
-            }
-          ]
+          "items": {
+            "$ref": "#/definitions/E2ETest"
+          }
         }
-      }
+      },
+      "required": [],
+      "title": "Tests"
+    },
+    "E2ETest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Route": {
+          "type": "string"
+        },
+        "Arrange": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/E2ETestStep"
+          }
+        },
+        "Act": {
+          "$ref": "#/definitions/E2ETestStep"
+        },
+        "Assert": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/E2ETestStep"
+          }
+        }
+      },
+      "required": [
+        "Name"
+      ],
+      "title": "E2ETest"
+    },
+    "E2ETestStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Step": {
+          "type": "string"
+        },
+        "LocatorType": {
+          "$ref": "#/definitions/LocatorType"
+        },
+        "AriaRole": {
+          "$ref": "#/definitions/AriaRole"
+        },
+        "Text": {
+          "type": "string"
+        },
+        "Action": {
+          "$ref": "#/definitions/Action"
+        },
+        "Value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Step"
+      ],
+      "title": "E2ETestStep"
+    },
+    "HealthTest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Expected": {
+          "type": "string"
+        },
+        "PropertyPath": {
+          "type": "string"
+        },
+        "Route": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Expected",
+        "Name",
+        "PropertyPath",
+        "Route"
+      ],
+      "title": "HealthTest"
+    },
+    "Action": {
+      "type": "string",
+      "enum": [
+        "Click",
+        "Fill",
+        "IsVisible"
+      ],
+      "title": "Action"
+    },
+    "AriaRole": {
+      "type": "string",
+      "enum": [
+        "Button",
+        "Link",
+        "Heading"
+      ],
+      "title": "AriaRole"
+    },
+    "LocatorType": {
+      "type": "string",
+      "enum": [
+        "GetByRole",
+        "GetByLabel",
+        "GetByText"
+      ],
+      "title": "LocatorType"
     }
-  },
-  "required": [
-    "Domain",
-    "Channel",
-    "Tests"
-  ]
+  }
 }

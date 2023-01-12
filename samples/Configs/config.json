@@ -1,4 +1,5 @@
 {
+  "$schema": "smoky-schema.json",
   "Domain": "https://localhost:5001",
   "Headless": false,
   "Slow": 200,
