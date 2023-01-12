@@ -33,20 +33,23 @@ Run 'smoky [command] -?|-h|--help' for more information about a command.
 ```json
 {
   "Domain": "https://localhost:5001",
-  "Headless": true,
-  "Slow": false,
-  "Timeout": 20000,
+  "Headless": false,
+  "Slow": 500,
+  "Timeout": 5000,
+  "Channel": "chrome",
   "Tests": {
     "HealthTests": [
       {
         "Name": "System is healthy",
         "Expected": "Healthy",
-        "PropertyPath": "status"
+        "PropertyPath": "status",
+        "Route": "health"
       },
       {
         "Name": "All users seeded",
         "Expected": "Healthy",
-        "PropertyPath": "info[0].status"
+        "PropertyPath": "info[0].status",
+        "Route": "health"
       }
     ],
     "E2ETests": [
@@ -55,37 +58,114 @@ Run 'smoky [command] -?|-h|--help' for more information about a command.
         "Route": "Login",
         "Arrange": [
           {
-            "Name": "Should enter username",
-            "Selector": "input#Input_Username",
-            "Input": "admin"
+            "Step": "Should enter username",
+            "LocatorType": "GetByLabel",
+            "Text": "Username",
+            "Action": "Fill",
+            "Value": "admin"
           },
           {
-            "Name": "Should enter password",
-            "Selector": "input#Input_Password",
-            "Input": "password"
+            "Step": "Should enter password",
+            "LocatorType": "GetByLabel",
+            "Text": "Password",
+            "Action": "Fill",
+            "Value": "password"
           }
         ],
         "Act": {
-          "Name": "Should click login",
-          "Selector": "button[type=submit]",
-          "Click": true
+          "Step": "Should click login",
+          "LocatorType": "GetByRole",
+          "AriaRole": "Button",
+          "Text": "Login",
+          "Action": "Click"
         },
         "Assert": [
           {
-            "Name": "Should display Logout button",
-            "Selector": "button[type=submit]",
-            "Expected": "Logout"
+            "Step": "Should display Logout button",
+            "LocatorType": "GetByRole",
+            "AriaRole": "Button",
+            "Text": "Logout",
+            "Action": "IsVisible"
           }
         ]
       },
       {
-        "Name": "Should display holiday page",
-        "Route": "holiday",
+        "Name": "Should display home",
+        "Route": "",
+        "Act": {
+          "Step": "Should click admin navigation item",
+          "LocatorType": "GetByRole",
+          "AriaRole": "Link",
+          "Text": "Admin",
+          "Action": "Click"
+        },
         "Assert": [
           {
-            "Name": "Should display title Holidays",
-            "Selector": "h3",
-            "Expected": "Holidays"
+            "Step": "Should display home page",
+            "LocatorType": "GetByRole",
+            "AriaRole": "Heading",
+            "Text": "Workflows",
+            "Action": "IsVisible"
+          }
+        ]
+      },
+      {
+        "Name": "Should display holidays page",
+        "Route": "",
+        "Act": {
+          "Step": "Should click holiday navigation item",
+          "LocatorType": "GetByRole",
+          "AriaRole": "Link",
+          "Text": "Holiday",
+          "Action": "Click"
+        },
+        "Assert": [
+          {
+            "Step": "Should display holidays page",
+            "LocatorType": "GetByRole",
+            "AriaRole": "Heading",
+            "Text": "Holidays",
+            "Action": "IsVisible"
+          }
+        ]
+      },
+      {
+        "Name": "Should display issues page",
+        "Route": "",
+        "Act": {
+          "Step": "Should click issue navigation item",
+          "LocatorType": "GetByRole",
+          "AriaRole": "Link",
+          "Text": "Issue",
+          "Action": "Click"
+        },
+        "Assert": [
+          {
+            "Step": "Should display issues page",
+            "LocatorType": "GetByRole",
+            "AriaRole": "Heading",
+            "Text": "Issues",
+            "Action": "IsVisible"
+          }
+        ]
+      },
+      {
+        "Name": "Should display workflows page",
+        "Route": "",
+        "Act": {
+          "Step": "Should click workflows navigation item",
+          "LocatorType": "GetByRole",
+          "AriaRole": "Link",
+          "Text": "Workflows",
+          "Action": "Click"
+        },
+        "Assert": [
+          {
+            "Step": "Should display instances page",
+            "LocatorType": "GetByRole",
+            "AriaRole": "Heading",
+            "Text": "Instances",
+            "Action": "IsVisible"
           }
         ]
       }

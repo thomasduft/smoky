@@ -1,7 +1,7 @@
 {
   "Domain": "https://localhost:5001",
   "Headless": false,
-  "Slow": 500,
+  "Slow": 200,
   "Timeout": 5000,
   "Channel": "chrome",
   "Tests": {
