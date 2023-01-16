@@ -10,7 +10,7 @@
     <AssemblyName>tomware.Smoky</AssemblyName>
     <RootNamespace>tomware.Smoky</RootNamespace>
 
-    <Description>A A simple smoke test tool.</Description>
+    <Description>A simple smoke test tool.</Description>
     <Authors>Thomas Duft</Authors>
     <Company>tomware SOLUTIONS</Company>
     <Copyright>2023 tomware SOLUTIONS</Copyright>
