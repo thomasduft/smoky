@@ -16,7 +16,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="7.0.2" />
 
-    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.5.0" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.6.0" />
     <PackageReference Include="OpenIddict.AspNetCore" Version="4.0.0" />
     <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="4.0.0" />
     <PackageReference Include="OpenIddict.Quartz" Version="4.0.0" />
