@@ -1,8 +1,7 @@
 TODO:
 
-- [x] json schema
-  - see https://codebeautify.org/json-to-json-schema-generator
-  - "$schema": "smoky-schema.json",
+- [ ] init command
+  - ejects a scaffolded sample config and the json schema
 
 - [ ] install playwright at first if not yet installed
   - pwsh bin/Debug/netX/playwright.ps1 install
