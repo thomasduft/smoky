@@ -13,7 +13,7 @@ internal class Runner
 
   public async Task<bool> Run(CancellationToken cancellationToken)
   {
-    ConsoleHelper.WriteLineYellow("Starting smoke test execution...");
+    ConsoleHelper.WriteLineYellow($"Starting smoke test execution for {_configuration.Domain}...");
 
     var results = new List<TestResult>();
 
