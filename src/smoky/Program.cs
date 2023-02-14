@@ -13,6 +13,24 @@ const string HelpOption = "-?|-h|--help";
 
 app.HelpOption(HelpOption);
 
+app.Command("init", (command) =>
+{
+  command.Description = "Initializes and scaffolds an empty smoky config file (eg. init -n <some-name>).";
+  var nameOption = command.Option("-n|--name", "Name of the smoky config file (defaults to 'smoky').", CommandOptionType.SingleValue);
+  command.HelpOption();
+  command.OnExecuteAsync(async cancellationToken =>
+  {
+    var name = nameOption.HasValue()
+      ? nameOption.Value()
+      : "smoky";
+
+    Initializer initializer = new Initializer(name!);
+    return await initializer.Init(cancellationToken)
+        ? 0
+        : 1;
+  });
+});
+
 app.Command("ping", (command) =>
 {
   command.Description = "Executes a ping to a domain to test (eg. ping \"https://my-domain.com\").";

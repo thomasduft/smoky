@@ -11,4 +11,9 @@ internal static class JsonExtensions
 
     return result;
   }
+
+  internal static string ToJsonForInitCommand<T>(this T obj)
+  {
+    return JsonConvert.SerializeObject(obj, Formatting.Indented);
+  }
 }
