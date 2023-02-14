@@ -38,6 +38,7 @@ internal enum LocatorType
   GetByRole,
   GetByTestId,
   GetByText,
+  BySelector
 }
 
 internal enum ActionType

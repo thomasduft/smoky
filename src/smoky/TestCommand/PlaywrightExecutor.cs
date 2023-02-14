@@ -141,6 +141,10 @@ internal class PlaywrightExecutor
     {
       locator = page.GetByTestId(step.Text);
     }
+    else if (step.LocatorType == LocatorType.BySelector)
+    {
+      locator = page.Locator(step.Text);
+    }
     else
     {
       locator = page.GetByText(step.Text);
