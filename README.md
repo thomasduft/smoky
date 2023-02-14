@@ -13,6 +13,10 @@ Using a configuration file, you can easily configure acceptance smoke tests. The
 
 > The basic intent of `smoky` is to perform some smoke tests on a web application during the integration deployment pipeline and get instant feedback on whether the deployment succeeded and the web application is up and running as expected.
 
+## Demo
+
+![Demo](demo.gif)
+
 ## Usage
 
 ```console
