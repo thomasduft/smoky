@@ -26,6 +26,7 @@ Options:
   -?|-h|--help  Show help information.
 
 Commands:
+  init          Initializes and scaffolds an empty smoky config file (eg. init -n <some-name>).
   ping          Executes a ping to a domain to test (eg. ping "https://my-domain.com").
   test          Executes the configured test assertions in the config tool (eg. test config.json -d "https://my-domain.com").
 
