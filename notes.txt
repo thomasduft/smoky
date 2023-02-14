@@ -3,6 +3,9 @@ TODO:
 - [ ] init command
   - ejects a scaffolded sample config and the json schema
 
+- [ ] recored videos option
+  - as configuration
+
 - [ ] install playwright at first if not yet installed
   - pwsh bin/Debug/netX/playwright.ps1 install
   - npm install playwright
