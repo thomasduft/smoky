@@ -137,6 +137,10 @@ internal class PlaywrightExecutor
     {
       locator = page.GetByRole(step.AriaRole, new() { Name = step.Text });
     }
+    else if (step.LocatorType == LocatorType.GetByTestId)
+    {
+      locator = page.GetByTestId(step.Text);
+    }
     else
     {
       locator = page.GetByText(step.Text);

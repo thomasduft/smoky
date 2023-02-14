@@ -34,9 +34,10 @@ internal class E2ETestStep
 
 internal enum LocatorType
 {
-  GetByText,
   GetByLabel,
-  GetByRole
+  GetByRole,
+  GetByTestId,
+  GetByText,
 }
 
 internal enum ActionType
