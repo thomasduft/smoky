@@ -14,6 +14,7 @@ internal class Initializer
     var config = new SmokyConfiguration
     {
       Domain = "<your-domain-here>",
+      RecordVideoDir = "",
       Headless = false,
       Slow = 200,
       Timeout = 30000,

@@ -66,7 +66,8 @@ internal class Runner
       _configuration.Headless,
       _configuration.Slow,
       _configuration.Timeout,
-      _configuration.Channel
+      _configuration.Channel,
+      _configuration.RecordVideoDir
     );
     var result = await executor.ExecuteAsync(
         _configuration.Domain,

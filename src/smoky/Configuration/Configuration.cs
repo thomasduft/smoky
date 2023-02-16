@@ -8,6 +8,13 @@ internal class SmokyConfiguration
   public string Domain { get; set; } = string.Empty;
 
   /// <summary>
+  /// Enables video recording for all pages into the specified directory. 
+  /// If not specified videos are not recorded. 
+  /// </summary>
+  /// <value></value>
+  public string RecordVideoDir { get; set; } = string.Empty;
+
+  /// <summary>
   /// For displaying the E2E in the actual browser (defaults to true).
   /// </summary>
   public bool Headless { get; set; } = true;

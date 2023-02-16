@@ -13,15 +13,16 @@ internal class PlaywrightExecutor
   private readonly int? _slow;
   private readonly int _timeout;
   private readonly string _channel;
-
+  private readonly string _recordVideoDir;
   private string _requestUri = string.Empty;
 
-  public PlaywrightExecutor(bool headless, int? slow, int timeout, string channel)
+  public PlaywrightExecutor(bool headless, int? slow, int timeout, string channel, string recordVideoDir)
   {
     _headless = headless;
     _slow = slow;
     _timeout = timeout;
     _channel = channel;
+    _recordVideoDir = recordVideoDir;
   }
 
   public async Task<IEnumerable<TestResult>> ExecuteAsync(
@@ -49,6 +50,8 @@ internal class PlaywrightExecutor
       var result = await TestAsync(page, domain, test, cancellationToken);
       results.Add(result);
     }
+
+    await context.DisposeAsync();
 
     return results;
   }
@@ -115,10 +118,16 @@ internal class PlaywrightExecutor
   {
     IBrowserContext? context = null;
 
-    context = await browser.NewContextAsync(new BrowserNewContextOptions
+    var options = new BrowserNewContextOptions
     {
       IgnoreHTTPSErrors = true
-    });
+    };
+    if (!string.IsNullOrWhiteSpace(_recordVideoDir))
+    {
+      options.RecordVideoDir = _recordVideoDir;
+      options.RecordVideoSize = new RecordVideoSize() { Width = 640, Height = 480 };
+    }
+    context = await browser.NewContextAsync(options);
 
     context.SetDefaultTimeout(_timeout);
 
