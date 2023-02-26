@@ -11,7 +11,7 @@ internal class Runner
     _domain = domain;
   }
 
-  public async Task<bool> Run(CancellationToken cancellationToken)
+  public async Task<bool> RunAsync(CancellationToken cancellationToken)
   {
     ConsoleHelper.WriteLineYellow($"Starting smoke test execution for {_configuration.Domain}...");
 

@@ -37,9 +37,11 @@ Run 'smoky [command] -?|-h|--help' for more information about a command.
 
 ```json
 {
+  "$schema": "smoky-schema.json",
   "Domain": "https://localhost:5001",
+  "RecordVideoDir": "recordings/",
   "Headless": false,
-  "Slow": 500,
+  "Slow": 200,
   "Timeout": 5000,
   "Channel": "chrome",
   "Tests": {

@@ -25,7 +25,7 @@ app.Command("init", (command) =>
       : "smoky";
 
     Initializer initializer = new Initializer(name!);
-    return await initializer.Init(cancellationToken)
+    return await initializer.InitAsync(cancellationToken)
         ? 0
         : 1;
   });
@@ -44,7 +44,7 @@ app.Command("ping", (command) =>
     }
 
     Pinger pinger = new Pinger(domainArgument.Value!);
-    return await pinger.Ping(cancellationToken)
+    return await pinger.PingAsync(cancellationToken)
       ? 0
       : 1;
   });
@@ -79,7 +79,7 @@ app.Command("test", (command) =>
 
     // if it fails return 1 otherwise 0
     Runner runner = new Runner(config, domain!);
-    return await runner.Run(cancellationToken)
+    return await runner.RunAsync(cancellationToken)
       ? 0
       : 1;
   });

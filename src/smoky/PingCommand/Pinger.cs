@@ -15,7 +15,7 @@ internal class Pinger
     });
   }
 
-  public async Task<bool> Ping(CancellationToken cancellationToken)
+  public async Task<bool> PingAsync(CancellationToken cancellationToken)
   {
     bool success = false;
 
@@ -23,7 +23,7 @@ internal class Pinger
     {
       ConsoleHelper.WriteLineYellow($"Contacting domain '{_domain}'...");
 
-      await _client.GetAsync(_domain);
+      await _client.GetAsync(_domain, cancellationToken);
       // usually check sth. like this = response.IsSuccessStatusCode;
       // but since we get an Unauthorized HttpStatus we just say as 
       // long as we do not get an exceptions somehow the domain was
