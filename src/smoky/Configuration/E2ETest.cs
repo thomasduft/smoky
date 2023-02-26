@@ -34,16 +34,16 @@ internal class E2ETestStep
 
 internal enum LocatorType
 {
+  BySelector,
   GetByLabel,
   GetByRole,
   GetByTestId,
-  GetByText,
-  BySelector
+  GetByText
 }
 
 internal enum ActionType
 {
-  IsVisible,
   Click,
-  Fill
+  Fill,
+  IsVisible
 }
