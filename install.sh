@@ -25,7 +25,7 @@ echo Starting building version $1
 
 echo ----
 echo Cleaning up
-rm -r ./dist
+rm -r ./artifacts
 dotnet tool uninstall -g tomware.Smoky
 
 echo ----
@@ -36,14 +36,14 @@ echo ----
 if [ $2 = "r" ];
 then
   echo Packaging solution with Version = $1
-  dotnet pack src/smoky -c Release -p:PackageVersion=$1 -p:Version=$1 -o ./dist/nupkgs/
+  dotnet pack src/smoky -c Release -p:PackageVersion=$1 -p:Version=$1 -o ./artifacts/nupkgs/
 fi
 
 if [ "$3" = "i" ];
 then
   echo ----
   echo Installing smoky globally with Version = $1
-  dotnet tool install --global --add-source ./dist/nupkgs/ tomware.smoky
+  dotnet tool install --global --add-source ./artifacts/nupkgs/ tomware.smoky
 fi
 
 echo ----
