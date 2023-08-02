@@ -9,9 +9,8 @@ var app = new CommandLineApplication
 {
   Name = "smoky"
 };
-const string HelpOption = "-?|-h|--help";
 
-app.HelpOption(HelpOption);
+app.HelpOption();
 
 app.Command("init", (command) =>
 {
@@ -24,7 +23,7 @@ app.Command("init", (command) =>
       ? nameOption.Value()
       : "smoky";
 
-    Initializer initializer = new Initializer(name!);
+    Initializer initializer = new(name!);
     return await initializer.InitAsync(cancellationToken)
         ? 0
         : 1;
@@ -78,7 +77,7 @@ app.Command("test", (command) =>
     // -s|--slow - for executing the E2E tests slowly
 
     // if it fails return 1 otherwise 0
-    Runner runner = new Runner(config, domain!);
+    Runner runner = new(config, domain!);
     return await runner.RunAsync(cancellationToken)
       ? 0
       : 1;

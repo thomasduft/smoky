@@ -21,7 +21,7 @@ internal class Runner
       await RunHealthCheckTests(results, cancellationToken);
 
     if (_configuration.Tests.E2ETests.Any())
-      await RunE2ETests(results, cancellationToken);
+      await RunE2ETests(results);
 
     // Write failed tests to console
     var success = !results.Any(r => r.Status == TestStatus.Failed);
@@ -35,7 +35,7 @@ internal class Runner
     }
     else
     {
-      ConsoleHelper.WriteLineSuccess($"'{results.Count()}' tests successfully passed...");
+      ConsoleHelper.WriteLineSuccess($"'{results.Count}' tests successfully passed...");
     }
 
     return success;
@@ -50,17 +50,14 @@ internal class Runner
     {
       var executor = new HealthCheckExecutor(healthTest);
       var result = await executor.ExecuteAsync(
-        _configuration.Domain,
+        _domain,
         cancellationToken
       );
       results.Add(result);
     }
   }
 
-  private async Task RunE2ETests(
-    List<TestResult> results,
-    CancellationToken cancellationToken
-  )
+  private async Task RunE2ETests(List<TestResult> results)
   {
     var executor = new PlaywrightExecutor(
       _configuration.Headless,
@@ -70,10 +67,10 @@ internal class Runner
       _configuration.RecordVideoDir
     );
     var result = await executor.ExecuteAsync(
-        _configuration.Domain,
-        _configuration.Tests.E2ETests,
-        cancellationToken
-      );
+      _domain,
+      _configuration.Tests.E2ETests
+    );
+
     results.AddRange(result);
   }
 }

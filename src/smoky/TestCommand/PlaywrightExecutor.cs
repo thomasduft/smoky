@@ -27,8 +27,7 @@ internal class PlaywrightExecutor
 
   public async Task<IEnumerable<TestResult>> ExecuteAsync(
     string domain,
-    IEnumerable<E2ETest> tests,
-    CancellationToken cancellationToken
+    IEnumerable<E2ETest> tests
   )
   {
     var results = new List<TestResult>();
@@ -47,7 +46,7 @@ internal class PlaywrightExecutor
 
     foreach (var test in tests)
     {
-      var result = await TestAsync(page, domain, test, cancellationToken);
+      var result = await TestAsync(page, domain, test);
       results.Add(result);
     }
 
@@ -59,8 +58,7 @@ internal class PlaywrightExecutor
   private async Task<TestResult> TestAsync(
     IPage page,
     string domain,
-    E2ETest config,
-    CancellationToken cancellationToken
+    E2ETest config
   )
   {
     try
@@ -116,27 +114,33 @@ internal class PlaywrightExecutor
 
   private async Task<IBrowserContext> GetBrowserContext(IBrowser browser)
   {
-    IBrowserContext? context = null;
-
     var options = new BrowserNewContextOptions
     {
       IgnoreHTTPSErrors = true
     };
+
     if (!string.IsNullOrWhiteSpace(_recordVideoDir))
     {
       options.RecordVideoDir = _recordVideoDir;
       options.RecordVideoSize = new RecordVideoSize() { Width = 640, Height = 480 };
     }
-    context = await browser.NewContextAsync(options);
 
+    IBrowserContext? context = await browser.NewContextAsync(options);
     context.SetDefaultTimeout(_timeout);
 
     return context;
   }
 
-  private async Task<bool> ProcessStepAsync(IPage page, E2ETestStep step)
+  private static async Task<bool> ProcessStepAsync(IPage page, E2ETestStep step)
   {
-    ILocator? locator = null;
+    ILocator? locator = EvaluateLocator(page, step);
+
+    return await ExecuteAction(step, locator);
+  }
+
+  private static ILocator EvaluateLocator(IPage page, E2ETestStep step)
+  {
+    ILocator? locator;
 
     if (step.LocatorType == LocatorType.GetByLabel)
     {
@@ -159,6 +163,11 @@ internal class PlaywrightExecutor
       locator = page.GetByText(step.Text);
     }
 
+    return locator;
+  }
+
+  private static async Task<bool> ExecuteAction(E2ETestStep step, ILocator locator)
+  {
     if (step.Action == ActionType.Click)
     {
       await locator.ClickAsync();
