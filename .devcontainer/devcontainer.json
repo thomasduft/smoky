@@ -1,22 +1,26 @@
-// https://github.com/devcontainers/images/tree/main/src/dotnet
 {
   "name": "smoky",
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
-      "VARIANT": "7.0",
+      "VARIANT": "8.0",
       "NODE_VERSION": "lts/*",
       "INSTALL_AZURE_CLI": "false"
     }
   },
-  // Set *default* container specific settings.json values on container create.
-  "settings": {},
-  // Add the IDs of extensions you want installed when the container is created.
-  "extensions": [
-    "ms-dotnettools.csharp",
-    "ryanluker.vscode-coverage-gutters",
-    "formulahendry.dotnet-test-explorer"
-  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "eamodio.gitlens",
+        "editorconfig.editorconfig",
+        "github.vscode-pull-request-github",
+        "mikestead.dotenv",
+        "minhthai.vscode-todo-parser",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit"
+      ]
+    }
+  },
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [
     4200,
