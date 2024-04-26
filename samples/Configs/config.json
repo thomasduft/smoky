@@ -2,7 +2,7 @@
   "$schema": "smoky-schema.json",
   "Domain": "https://localhost:5001",
   // "RecordVideoDir": "recordings/",
-  "Headless": true,
+  "Headless": false,
   "Slow": 200,
   "Timeout": 5000,
   "Channel": "chrome",

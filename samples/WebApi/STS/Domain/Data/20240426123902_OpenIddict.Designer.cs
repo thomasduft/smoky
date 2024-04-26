@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi;
 
@@ -10,9 +11,11 @@ using WebApi;
 namespace WebApi.STS.Domain.Data
 {
     [DbContext(typeof(STSDbContext))]
-    partial class STSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240426123902_OpenIddict")]
+    partial class OpenIddict
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
