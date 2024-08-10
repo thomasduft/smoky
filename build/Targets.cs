@@ -7,9 +7,9 @@ using static SimpleExec.Command;
 
 const string projectName = "smoky";
 const string solution = $"{projectName}.sln";
-IList<string> packableProjects = new List<string>{
+IList<string> packableProjects = [
   projectName
-};
+];
 
 var app = new CommandLineApplication
 {
@@ -89,7 +89,7 @@ app.OnExecuteAsync(async _ =>
     Run("git", $"commit -am \"Committing changelog changes for v{version}\"");
 
     // applying the tag
-    Run("git", $"tag -a v{version} -m \"version {version}\"");
+    Run("git", $"tag -a v{version} -m \"{version}\"");
 
     // pushing
     Run("git", $"push origin v{version}");
@@ -146,7 +146,7 @@ static IEnumerable<string> GetFiles(
   string filter
 )
 {
-  List<string> files = new List<string>();
+  List<string> files = new();
 
   files.AddRange(Directory.GetFiles(
     directoryToScan,
