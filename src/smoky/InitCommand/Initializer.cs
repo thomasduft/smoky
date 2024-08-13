@@ -28,6 +28,14 @@ internal class Initializer
         cancellationToken
     );
 
+    // also paste smoky-schema.json next to the config file
+    var jsonSchema = ResourceLoader.GetResource(Resources.SmokyJsonSchema);
+    await File.WriteAllTextAsync(
+        $"{_name}-schema.json",
+        jsonSchema,
+        cancellationToken
+    );
+
     return true;
   }
 }

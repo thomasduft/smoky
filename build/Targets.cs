@@ -47,7 +47,7 @@ app.OnExecuteAsync(async _ =>
 
   Target(AddChangelog, () =>
   {
-    Run("dotnet", "tool run releasy add-changelog");
+    Run("dotnet", "tool run releasy add-changelog", ".changelogs");
   });
   #endregion
 
@@ -83,7 +83,11 @@ app.OnExecuteAsync(async _ =>
     Console.WriteLine($"Releasing version: '{version}'");
 
     // updating the changelog
-    Run("dotnet", $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/{projectName}/issues/");
+    Run(
+      "dotnet",
+      $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/{projectName}/issues/",
+      ".changelogs"
+    );
 
     // committing the changelog changes
     Run("git", $"commit -am \"Committing changelog changes for v{version}\"");

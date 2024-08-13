@@ -22,6 +22,18 @@
       "console": "integratedTerminal",
     },
     {
+      "name": "smoky:init",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-smoky",
+      "program": "${workspaceFolder}/src/smoky/bin/Debug/net8.0/tomware.Smoky.dll",
+      "args": [
+        "init"
+      ],
+      "cwd": "${workspaceFolder}/src/smoky",
+      "stopAtEntry": false
+    },
+    {
       "name": "smoky:ping",
       "type": "coreclr",
       "request": "launch",
