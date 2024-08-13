@@ -1,5 +1,7 @@
 using Microsoft.Playwright;
 
+using static tomware.Smoky.ConsoleHelper;
+
 namespace tomware.Smoky;
 
 // TODO: instruct Playwright
@@ -75,6 +77,8 @@ internal class PlaywrightExecutor
           await page.GotoAsync(requestUri);
         }
       }
+
+      WriteLineYellow($"- Running test '{config.Name}'...");
 
       // Arrange
       if (config.Arrange is not null && config.Arrange.Any())
