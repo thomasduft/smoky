@@ -33,7 +33,7 @@ public static class ConfigureApplication
     }
 
     app.UseSerilogRequestLogging();
-    
+
     ConsiderSpaRoutes(app);
 
     app.UseDefaultFiles();
