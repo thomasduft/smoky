@@ -103,7 +103,11 @@ internal class PlaywrightExecutor
           var value = await ProcessStepAsync(page, assertStep);
           if (!value)
           {
-            return TestResult.Failed(assertStep.Step, "couldn't be located or visible");
+            return TestResult.Failed(
+              config.Name,
+              assertStep.Step,
+              "couldn't be located or visible"
+            );
           }
         }
       }

@@ -30,7 +30,7 @@ internal class Runner
       ConsoleHelper.WriteLineError($"The following test(s) failed:");
       foreach (var result in results.Where(r => r.Status == TestStatus.Failed))
       {
-        ConsoleHelper.WriteLineError($"- Name: {result.Name}, Actual/Error: {result.FailCause}");
+        ConsoleHelper.WriteLineError($"- Name: {result.Name}, Step: {result.TestStep}, Actual/Error: {result.FailCause}");
       }
     }
     else

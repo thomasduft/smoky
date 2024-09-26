@@ -20,6 +20,8 @@ Using a configuration file, you can easily configure acceptance smoke tests. The
 ## Usage
 
 ```console
+A simple smoke test tool
+
 Usage: smoky [command] [options]
 
 Options:

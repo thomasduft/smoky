@@ -53,12 +53,9 @@ internal class HealthCheckExecutor
       string value = (string)o.SelectToken(propertyPath)!;
 
       // assert
-      if (value == _config.Expected)
-      {
-        return TestResult.Passed(_config.Name);
-      }
-
-      return TestResult.Failed(_config.Name, value);
+      return value == _config.Expected 
+        ? TestResult.Passed(_config.Name) 
+        : TestResult.Failed(_config.Name, "n/a", value);
     }
     catch (Exception ex)
     {

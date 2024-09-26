@@ -1,5 +1,7 @@
 TODO:
 
+- [ ] remove Newtonsoft
+
 - [ ] install playwright at first if not yet installed
   - pwsh bin/Debug/netX/playwright.ps1 install
   - npm install playwright

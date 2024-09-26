@@ -8,6 +8,8 @@ internal record TestResult
 
   public string Name { get; private set; } = string.Empty;
 
+  public string TestStep { get; set; } = string.Empty;
+
   public TestStatus Status { get; private set; }
 
   public string FailCause
@@ -29,11 +31,12 @@ internal record TestResult
     };
   }
 
-  public static TestResult Failed(string name, string actual)
+  public static TestResult Failed(string testName, string testStep, string actual)
   {
     return new TestResult
     {
-      Name = name,
+      Name = testName,
+      TestStep = testStep,
       Status = TestStatus.Failed,
       Actual = actual
     };
