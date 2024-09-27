@@ -1,10 +1,19 @@
 TODO:
 
-- [ ] remove Newtonsoft
-
 - [ ] install playwright at first if not yet installed
   - pwsh bin/Debug/netX/playwright.ps1 install
   - npm install playwright
+  - PS C:\work\github\smoky\src\smoky\bin\Debug\net8.0> .\playwright.ps1 install
+  - use CliWrap (https://github.com/Tyrrrz/CliWrap)
+
+
+- [ ] check to not pack (exclude) '.playwright'-directory for nupkg
+  - <PackageReference ExcludeAssets="runtime" />
+  - lookup coverlet package references
+
+
+- [ ] remove Newtonsoft
+
 
 ----------------------------------------------------------------------------------------------------
 Playwright API:
