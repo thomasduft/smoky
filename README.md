@@ -1,3 +1,5 @@
+[![build](https://github.com/thomasduft/smoky/actions/workflows/build.yml/badge.svg)](https://github.com/thomasduft/smoky/actions/workflows/build.yml)
+
 # Smoky
 
 `smoky` - a simple smoke test tool.
