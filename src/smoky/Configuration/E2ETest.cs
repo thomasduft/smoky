@@ -7,9 +7,9 @@ internal class E2ETest
 {
   public string Name { get; set; } = string.Empty;
   public string Route { get; set; } = string.Empty;
-  public List<E2ETestStep> Arrange { get; set; } = new List<E2ETestStep>();
+  public List<E2ETestStep> Arrange { get; set; } = [];
   public E2ETestStep? Act { get; set; }
-  public List<E2ETestStep> Assert { get; set; } = new List<E2ETestStep>();
+  public List<E2ETestStep> Assert { get; set; } = [];
 }
 
 internal class E2ETestStep
