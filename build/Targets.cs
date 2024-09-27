@@ -85,8 +85,7 @@ app.OnExecuteAsync(async _ =>
     // updating the changelog
     Run(
       "dotnet",
-      $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/{projectName}/issues/",
-      ".changelogs"
+      $"tool run releasy update-changelog -v {version} -p https://github.com/thomasduft/{projectName}/issues/"
     );
 
     // committing the changelog changes
