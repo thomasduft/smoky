@@ -1,0 +1,9 @@
+{
+  "Id": "54dcec09-3fbd-47e8-a829-be1ed572235a",
+  "IssueId": "",
+  "Prefix": "Added",
+  "Tag": "",
+  "Message": "Added missing package metadata like project-url, readme file and license file.",
+  "CreatedAt": "2024-09-27T12:58:15.1689113+02:00",
+  "CreatedBy": "Thomas Duft"
+}
