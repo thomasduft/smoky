@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.0] - 2024-10-01
+
+### Added
+
+- Added support for browser types like firefox and webkit next to chrome.
+
 ## [0.1.1] - 2024-09-30
 
 ### Added
