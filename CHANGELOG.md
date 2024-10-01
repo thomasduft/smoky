@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.1] - 2024-10-01
+
+### Fixed
+
+- Fixed right handling of `BrowserType`-property serialization/deserialization in config files.
+
 ## [0.2.0] - 2024-10-01
 
 ### Added
