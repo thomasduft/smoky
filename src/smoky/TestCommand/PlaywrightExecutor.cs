@@ -14,16 +14,22 @@ internal class PlaywrightExecutor
   private readonly bool _headless;
   private readonly int? _slow;
   private readonly int _timeout;
-  private readonly string _channel;
+  private readonly BrowserType _browserType;
   private readonly string _recordVideoDir;
   private string _requestUri = string.Empty;
 
-  public PlaywrightExecutor(bool headless, int? slow, int timeout, string channel, string recordVideoDir)
+  public PlaywrightExecutor(
+    bool headless,
+    int? slow,
+    int timeout,
+    BrowserType browserType,
+    string recordVideoDir
+  )
   {
     _headless = headless;
     _slow = slow;
     _timeout = timeout;
-    _channel = channel;
+    _browserType = browserType;
     _recordVideoDir = recordVideoDir;
   }
 
@@ -35,10 +41,10 @@ internal class PlaywrightExecutor
     var results = new List<TestResult>();
 
     using var playwright = await Playwright.CreateAsync();
-    await using var browser = await playwright.Chromium
+    await using var browser = await GetBrowserType(playwright)
       .LaunchAsync(new BrowserTypeLaunchOptions
       {
-        Channel = !string.IsNullOrWhiteSpace(_channel) ? _channel : null,
+        // Channel = !string.IsNullOrWhiteSpace(_browserType) ? _browserType : null,
         Headless = _headless,
         SlowMo = _slow // by N milliseconds per operation,
       });
@@ -55,6 +61,16 @@ internal class PlaywrightExecutor
     await context.DisposeAsync();
 
     return results;
+  }
+
+  private IBrowserType GetBrowserType(IPlaywright playwright)
+  {
+    return _browserType switch
+    {
+      BrowserType.Webkit => playwright.Webkit,
+      BrowserType.Firefox => playwright.Firefox,
+      _ => playwright.Chromium,
+    };
   }
 
   private async Task<TestResult> TestAsync(

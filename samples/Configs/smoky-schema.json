@@ -25,8 +25,12 @@
         "Timeout": {
           "type": "integer"
         },
-        "Channel": {
-          "type": "string"
+        "BrowserType": {
+          "enum":[
+            "chrome",
+            "firefox",
+            "webkit"
+          ]
         },
         "Tests": {
           "$ref": "#/definitions/Tests"

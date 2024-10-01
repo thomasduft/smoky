@@ -1,3 +1,7 @@
+using System.Text.Json.Serialization;
+
+using Newtonsoft.Json.Converters;
+
 namespace tomware.Smoky;
 
 internal class SmokyConfiguration
@@ -30,11 +34,18 @@ internal class SmokyConfiguration
   public int Timeout { get; set; } = 30000;
 
   /// <summary>
-  /// Browser distribution channel.
-  /// Supported values are:"chrome", "chrome-beta", "chrome-dev", "chrome-canary", "msedge", "msedge-beta", "msedge-dev", "msedge-canary".
+  /// Browser types
+  /// Supported values are: chrome, firefox, webkit
   /// </summary>
-  /// <value></value>
-  public string Channel { get; set; } = string.Empty;
+  [JsonConverter(typeof(StringEnumConverter))]
+  public BrowserType BrowserType { get; set; } = BrowserType.Chrome;
 
   public Tests Tests { get; set; } = new Tests();
+}
+
+internal enum BrowserType
+{
+  Chrome,
+  Firefox,
+  Webkit
 }

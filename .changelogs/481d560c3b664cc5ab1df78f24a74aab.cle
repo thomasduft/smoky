@@ -1,0 +1,9 @@
+{
+  "Id": "481d560c-3b66-4cc5-ab1d-f78f24a74aab",
+  "IssueId": "",
+  "Prefix": "Added",
+  "Tag": "",
+  "Message": "Added support for browser types like firefox and webkit next to chrome.",
+  "CreatedAt": "2024-10-01T10:14:33.7418103+02:00",
+  "CreatedBy": "Thomas Duft"
+}

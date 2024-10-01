@@ -18,7 +18,7 @@ internal class Initializer
       Headless = false,
       Slow = 200,
       Timeout = 30000,
-      Channel = "chrome",
+      BrowserType = BrowserType.Chrome,
       Tests = new Tests()
     };
 

@@ -5,7 +5,7 @@
   "Headless": false,
   "Slow": 200,
   "Timeout": 5000,
-  "Channel": "chrome",
+  "BrowserType": "chrome",
   "Tests": {
     "HealthTests": [
       {

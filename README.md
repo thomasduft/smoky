@@ -10,8 +10,8 @@
 
 Using a configuration file, you can easily configure acceptance smoke tests. The currently supported types are:
 
-- HealthCheck tests: These tests make it possible to check the health of a web application
-- E2E tests: Leveraging [Playwright for .NET](https://playwright.dev/dotnet/) these tests allow simple E2E tests to be run using a headless browser (currently Chrome-based only)
+- HealthCheck tests: These tests make it possible to check the health of a web application.
+- E2E tests: Leveraging [Playwright for .NET](https://playwright.dev/dotnet/) these tests allow simple E2E tests to be run using a headless browser.
 
 > The basic intent of `smoky` is to perform some smoke tests on a web application during the integration deployment pipeline and get instant feedback on whether the deployment succeeded and the web application is up and running as expected.
 
@@ -47,7 +47,7 @@ Run 'smoky [command] -?|-h|--help' for more information about a command.
   "Headless": false,
   "Slow": 200,
   "Timeout": 5000,
-  "Channel": "chrome",
+  "BrowserType": "chrome",
   "Tests": {
     "HealthTests": [
       {

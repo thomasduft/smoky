@@ -13,7 +13,7 @@ internal class Runner
 
   public async Task<bool> RunAsync(CancellationToken cancellationToken)
   {
-    ConsoleHelper.WriteLineYellow($"Starting smoke test execution for {_configuration.Domain}...");
+    ConsoleHelper.WriteLineYellow($"Starting smoke test execution for '{_configuration.Domain}' with '{_configuration.BrowserType}' browser...");
 
     var results = new List<TestResult>();
 
@@ -63,7 +63,7 @@ internal class Runner
       _configuration.Headless,
       _configuration.Slow,
       _configuration.Timeout,
-      _configuration.Channel,
+      _configuration.BrowserType,
       _configuration.RecordVideoDir
     );
     var result = await executor.ExecuteAsync(

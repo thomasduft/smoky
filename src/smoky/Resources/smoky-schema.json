@@ -26,7 +26,11 @@
           "type": "integer"
         },
         "Channel": {
-          "type": "string"
+          "enum":[
+            "chrome",
+            "firefox",
+            "webkit"
+          ]
         },
         "Tests": {
           "$ref": "#/definitions/Tests"
