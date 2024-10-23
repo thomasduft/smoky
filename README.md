@@ -1,4 +1,4 @@
-[![build](https://github.com/thomasduft/smoky/actions/workflows/build.yml/badge.svg)](https://github.com/thomasduft/smoky/actions/workflows/build.yml)
+[![build](https://github.com/thomasduft/smoky/actions/workflows/build.yml/badge.svg)](https://github.com/thomasduft/smoky/actions/workflows/build.yml) [![NuGet Release](https://img.shields.io/nuget/vpre/tomware.Smoky.svg)]
 
 # Smoky
 
