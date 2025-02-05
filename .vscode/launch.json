@@ -6,7 +6,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build:WebApi",
-      "program": "${workspaceRoot}/samples/WebApi/bin/Debug/net8.0/WebApi.dll",
+      "program": "${workspaceRoot}/samples/WebApi/bin/Debug/net9.0/WebApi.dll",
       "args": [
         "--urls",
         "https://localhost:5001"
@@ -26,7 +26,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build-smoky",
-      "program": "${workspaceFolder}/src/smoky/bin/Debug/net8.0/tomware.Smoky.dll",
+      "program": "${workspaceFolder}/src/smoky/bin/Debug/net9.0/tomware.Smoky.dll",
       "args": [
         "init"
       ],
@@ -38,7 +38,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build-smoky",
-      "program": "${workspaceFolder}/src/smoky/bin/Debug/net8.0/tomware.Smoky.dll",
+      "program": "${workspaceFolder}/src/smoky/bin/Debug/net9.0/tomware.Smoky.dll",
       "args": [
         "ping",
         "https://localhost:5001"
@@ -51,7 +51,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build-smoky",
-      "program": "${workspaceFolder}/src/smoky/bin/Debug/net8.0/tomware.Smoky.dll",
+      "program": "${workspaceFolder}/src/smoky/bin/Debug/net9.0/tomware.Smoky.dll",
       "args": [
         "test",
         "../../samples/Configs/config.json"
