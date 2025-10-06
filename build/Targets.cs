@@ -6,7 +6,7 @@ using static Bullseye.Targets;
 using static SimpleExec.Command;
 
 const string projectName = "smoky";
-const string solution = $"{projectName}.sln";
+const string solution = $"{projectName}.slnx";
 IList<string> packableProjects = [
   projectName
 ];
